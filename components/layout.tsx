@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: any }) {
         Ejemplo pantalla
       </header>
       <div className="flex flex-col md:flex-row flex-1">
-        <aside className="bg-grey-100 w-full md:w-60">
+        <aside className="bg-blue-400 w-full md:w-60">
           <nav>
             <ul>
               {menuItems.map((item) => (
