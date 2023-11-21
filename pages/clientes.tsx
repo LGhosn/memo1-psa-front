@@ -9,13 +9,36 @@ export default function Clientes() {
     const [list, setList] = useState([])
 
     useEffect(() => {
-        fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
-            .then((res) => {
-                return res.json()
-            })
-            .then((data) => {
-                setList(data)
-            })
+        // fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
+        //     .then((res) => {
+        //         console.log("Hola");
+        //         return res.json()
+        //     })
+        //     .then((data) => {
+        //         console.log("Chau");
+        //         setList(data)
+        //         console.log("Error");
+        //     }) 
+        // El fetch no corre de forma local porque tira un error de CORS (Cross Origin). 
+        // Si el dominio ('anypoint.mulesoft...') no se corresponde de donde lo llaman (en este caso 'localhost'), va a tirar ese error. 
+        // No se puede solucionar desde el lado del cliente
+        setList([ // hice un request a esa direccion y me dio este resultado. lo dejo estatico
+            {
+                "id": 1,
+                "razon social": "FIUBA",
+                "CUIT": "20-12345678-2"
+            },
+            {
+                "id": 2,
+                "razon social": "FSOC",
+                "CUIT": "20-12345678-5"
+            },
+            {
+                "id": 3,
+                "razon social": "Macro",
+                "CUIT": "20-12345678-3"
+            }
+        ])
     }, [])
 
     return (

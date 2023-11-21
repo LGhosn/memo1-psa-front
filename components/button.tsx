@@ -26,7 +26,7 @@ export const Button = ( {title }: Props) => {
       </button>
       {open && (
         <>
-        <Form open={open} title="Nueva Tarea"/>
+        <Form openForm={open} setOpenForm={setOpen} title="Nueva Tarea"/>
         </>
       )}
     </>
