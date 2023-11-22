@@ -27,8 +27,10 @@ export default function Home() {
         width = "200px"
         fontSize='1.5rem'/>
       ))}
+     
 
       </div>
+      
 
     </div>
   )

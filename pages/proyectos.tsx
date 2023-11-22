@@ -63,6 +63,7 @@ export default function Clientes() {
                                 <tr>
                                     <HeaderItem title="Nombre" />
                                     <HeaderItem title="Estado" />
+                                    <HeaderItem title=""/>
                                 </tr>
                                 </thead>
 

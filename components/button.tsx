@@ -38,8 +38,10 @@ export const Button = ( {title,height,width,fontSize }: Props) => {
       {open && (
         <>
         <Form openForm={open} setOpenForm={setOpen} title={title}/>
+        
         </>
       )}
     </>
   )
 }
+"<Card openCard={open} setOpenCard={setOpen} title={title}/>"
