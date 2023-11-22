@@ -12,7 +12,7 @@ export default function ProyectGridRow({ proyecto }: {proyecto: any}) {
             </td>
 
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${proyecto['Nombre']}`}>
-                <MainButton href= {`/project/${proyecto['Nombre']}`} title= "Ver Proyecto"
+                <MainButton href= {`/proyectos/${proyecto['Nombre']}`} title= "Ver Proyecto"
                     height = "50px"
                     width = "120px"
                     fontSize='1rem'/>
