@@ -19,12 +19,17 @@ export default function Home() {
 
   return (
     <div className="flex h-full flex-col justify-center items-center bg-white">
-      <h1 className="text-4xl mb-5 font-bold bg-black">Módulos</h1>
-      {menuItems.map((item) => (
-        <MainButton {...item} key={item.title} />
+      <h1 className="text-4xl mb-5 font-bold">Módulos</h1>
+      <div style={{ display: "flex" ,flexDirection: "column", gap:'3rem'}}>
+        {menuItems.map((item) => (
+        <MainButton {...item} key={item.title}
+        height = "90px"
+        width = "200px"
+        fontSize='1.5rem'/>
       ))}
 
-      <Button title="Nueva tarea" />
+      </div>
+
     </div>
   )
 }

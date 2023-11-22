@@ -1,5 +1,9 @@
 import {useEffect, useState} from "react";
 import ProjectGridRow from "@/components/projectGridRow";
+import { MainButton } from "@/components/mainButton"
+import { Button } from "@/components/button"
+
+
 
 function HeaderItem({ title }: { title: string }) {
     return <th className="px-6 py-3 text-sm text-left text-gray-500 border-b border-gray-200 bg-gray-50">{title}</th>
@@ -46,7 +50,8 @@ export default function Clientes() {
         <>
             {/* ACA EMPIEZA LA GRILLA */}
 
-            <div className="container max-w-7xl mx-auto mt-8">
+            <div className="container max-w-2xl mx-auto mt-8"
+                style={{margin: "20px 0 0 50px"}}>
                 <div className="mb-4">
                     <h1 className="text-3xl font-bold decoration-gray-400">Proyectos</h1>
                 </div>
@@ -71,6 +76,20 @@ export default function Clientes() {
                     </div>
                 </div>
             </div>
+
+            <div style={{ display: "flex" ,flexDirection: "row", gap:'20rem', margin: "30px 0 0 80px"}}>
+            <Button 
+                title="Nuevo proyecto" 
+                height = "50px"
+                width = "150px"
+                fontSize='1rem'/>
+            <MainButton
+                title="Volver" 
+                href="/"
+                height = "50px"
+                width = "150px"
+                fontSize='1.2rem'/>
+      </div>
         </>
     )
 }
