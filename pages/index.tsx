@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Inter } from "next/font/google"
 import { MainButton } from "@/components/mainButton"
 import { Button } from "@/components/button"
+import { MainContainer } from "@/components/mainContainer"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -18,13 +19,12 @@ export default function Home() {
   ]
 
   return (
-    <div className="flex h-full flex-col justify-center items-center bg-white">
-      <h1 className="text-4xl mb-5 font-bold bg-black">Módulos</h1>
-      {menuItems.map((item) => (
-        <MainButton {...item} key={item.title} />
-      ))}
-
-      <Button title="Nueva tarea" />
-    </div>
+    <MainContainer title="Módulos">
+      <div className="flex space-x-5 mt-10 items-center bg-white">
+        {menuItems.map((item) => (
+          <MainButton {...item} key={item.title} />
+        ))}
+      </div>
+    </MainContainer>
   )
 }
