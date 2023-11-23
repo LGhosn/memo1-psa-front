@@ -17,7 +17,7 @@ export const Button = ( {title }: Props) => {
     <>
       <button onClick={openForm}>
         <div
-          className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-red-400 hover:bg-amber-100 dark:text-white dark:hover:bg-amber-700`}
+          className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-400 hover:bg-amber-100 dark:text-white dark:hover:bg-blue-700`}
           >
           <span className={`flex-1 ml-2 text-left whitespace-nowrap "font-bold"`}>
             {title}
@@ -26,7 +26,7 @@ export const Button = ( {title }: Props) => {
       </button>
       {open && (
         <>
-        <Form openForm={open} setOpenForm={setOpen} title="Nueva Tarea"/>
+        <Form openForm={open} setOpenForm={setOpen} title={title}/>
         </>
       )}
     </>
