@@ -8,8 +8,8 @@ export const supportRoutes = [
     title: "Productos",
   },
   {
-    href: "soporte/tareas",
-    title: "Tareas",
+    href: "soporte/tickets",
+    title: "Tickets",
   },
 ]
 
@@ -34,8 +34,8 @@ export const supportSideBarItems = [
       href: "/soporte/productos",
   },
   {
-      title: "Tareas",
-      href: "/soporte/tareas",
+      title: "Tickets",
+      href: "/soporte/tickets",
   },
   {
       title: "Proyectos",
