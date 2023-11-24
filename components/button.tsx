@@ -27,9 +27,7 @@ export const Button = ( {title,height,width,fontSize }: Props) => {
           }}
           >
           <span className={`flex-1 ml-2 text-left whitespace-nowrap "font-bold"`}
-          style={{
-            fontSize,
-            textAlign: "center"
+          style={{fontSize,textAlign: "center"
          }}>
             {title}
           </span>

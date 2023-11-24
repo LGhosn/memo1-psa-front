@@ -10,10 +10,7 @@ type Props = {
   fontSize: string;
 };
 
-export const MainButton = ( { href, title,
-  height,
-  width,
-  fontSize}: Props) => {
+export const MainButton = ( { href, title,height,width,fontSize}: Props) => {
   const router = useRouter()
 
   return (
