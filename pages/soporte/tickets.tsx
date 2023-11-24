@@ -16,7 +16,7 @@ export default function Tickets() {
       return res.json()
     }).then((res) => {
           setList(res)
-          // setLoading(false)
+          setLoading(false)
         })
   }, [])
 
