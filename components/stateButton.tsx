@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Form } from './form';
+import { State } from './state';
 
 type Props = {
   title: string;
@@ -9,7 +9,7 @@ type Props = {
   fontSize: string;
 };
 
-export const Button = ( {title,height,width,fontSize }: Props) => {
+export const StateButton = ( {title,height,width,fontSize }: Props) => {
   const [open, setOpen] = useState(false);
 
   const openForm = () => {
@@ -37,7 +37,7 @@ export const Button = ( {title,height,width,fontSize }: Props) => {
       </button>
       {open && (
         <>
-        <Form openForm={open} setOpenForm={setOpen} title={title}/>
+        <State openStates={open} setOpenStates={setOpen} title={title}/>
         
         </>
       )}

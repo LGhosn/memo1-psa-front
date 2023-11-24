@@ -11,7 +11,7 @@ export default function TareaGridRow({tarea}: {tarea: any}) {
             </td>
 
             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${tarea['Nombre']}`}>
-                <MainButton href= {`/proyectos/${tarea['Nombre']}`} title= "Ver tarea"
+                <MainButton href= {`/tareas/${tarea['Nombre']}`} title= "Ver tarea"
                     height = "50px"
                     width = "120px"
                     fontSize='1rem'/>
