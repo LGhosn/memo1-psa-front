@@ -16,11 +16,9 @@ export const MainButton = ( { href, title,height,width,fontSize}: Props) => {
   return (
     <Link href={href}>
       <div
-        className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-200 hover:bg-blue-400 dark:text-white dark:hover:bg-amber-700`}
-        style={{
-          height,
-          width,
-        }}
+
+        className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-400 hover:bg-amber-100 dark:text-white dark:hover:bg-blue-700`}
+
       >
       
         <span className={`flex-1 ml-2 text-left whitespace-nowrap ${router.asPath === href && "font-bold"}`}

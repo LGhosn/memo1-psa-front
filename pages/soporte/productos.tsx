@@ -52,6 +52,7 @@ export default function Productos() {
                     </div>
                 </div>
                 <Button title="Crear Producto" height = "50px" width = "150px" fontSize='1.2rem'  />
+
             </div>
         </div>
     )

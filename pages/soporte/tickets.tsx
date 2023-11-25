@@ -5,6 +5,8 @@ import { supportSideBarItems } from "@/utils/routes";
 import { Button } from "@/components/button";
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
+import {ButtonForCreation} from "@/pages/soporte/ButtonForCreation";
+
 
 export default function Tickets() {
   const [list, setList] = useState([])
@@ -26,7 +28,7 @@ export default function Tickets() {
         <SideBar items={supportSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-gray-400">Tareas</h1>
+            <h1 className="text-3xl font-bold decoration-gray-400">Tickets</h1>
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
@@ -52,7 +54,7 @@ export default function Tickets() {
                 </table>
               </div>
             </div>
-          </div><Button title="Crear tarea" height = "50px" width = "150px" fontSize='1.2rem' />
+          </div><ButtonForCreation title="Crear ticket" />
           </>
           }
         </div>
