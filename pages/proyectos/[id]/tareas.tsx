@@ -3,6 +3,8 @@ import TareaGridRow from "@/components/tareasGridRow";
 import { MainButton } from "@/components/mainButton";
 import { Button } from "@/components/button"
 import { useRouter } from 'next/router';
+import { StateButton } from "@/components/stateButton";
+import Loading from "@/components/loading";
 
 
 
@@ -24,7 +26,7 @@ export default function Tareas() {
             setList(res)
             setLoading(false)
             })
-    }, [])
+    }, [taskId])
 
     return (
         <>
@@ -47,7 +49,7 @@ export default function Tareas() {
                                 </thead>
 
                                 <tbody>
-                                {list.map((tarea) => (
+                                {loading ? <Loading /> : list.map((tarea) => (
                                     
                                     <TareaGridRow key={tarea['id']} tarea={tarea} />
                                 ))}

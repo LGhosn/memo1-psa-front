@@ -42,3 +42,19 @@ export const supportSideBarItems = [
       href: "/proyectos",
   }
 ];
+
+export const projectSideBarItems = [
+  {
+      title: "Home",
+      href: "/",
+  },
+  {
+      title: "Soporte",
+      href: "/soporte",
+  },
+  {
+      title: "Proyectos",
+      href: "/proyectos",
+  }
+];
+

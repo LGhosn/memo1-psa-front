@@ -17,6 +17,45 @@ export function State({openStates, setOpenStates }: PropsForm) {
     setOpenStates(false);
   }
 
+  function updateState() {
+    const state = document.getElementById("state");
+
+    const data = {
+      "id": 1,
+      "name": "Titulo",
+      // @ts-ignore
+      "description": state[state.selectedIndex].value,
+      "leader": "mili",
+      "creationDate": "2023-11-25T22:30:17.807664",
+      "totalHours": 0
+    }
+
+    fetch("https://psa-project-managment.onrender.com/api/v1/projects/project/1", 
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((res) => {
+      console.log(res)
+      toggleForm()
+    })
+
+    // fetch("https://psa-project-managment.onrender.com/api/v1/tasks/task/1/status/notStarted", 
+    // {
+    //   method: 'PATCH',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   // body: JSON.stringify(data)
+    // }).then((res) => {
+    //   console.log(res)
+    //   toggleForm()
+    // })
+
+  }
+
   return (
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
@@ -33,10 +72,10 @@ export function State({openStates, setOpenStates }: PropsForm) {
                   <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Estado</label>
                       <div className="mt-1">
-                        <select id="country" name="country" autoComplete="country" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900">
-                          <option>En proceso</option>
-                          <option>Finalizado</option>
-                          <option>Cancelado</option>
+                        <select id="state" name="state" autoComplete="state" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900">
+                          <option value={"IN_PROGRESS"}>En proceso</option>
+                          <option value={"SOLVED"}>Finalizado</option>
+                          <option value={"LOCKED"}>Cancelado</option>
                         </select>
                       </div>
                     </div>
@@ -50,7 +89,7 @@ export function State({openStates, setOpenStates }: PropsForm) {
               <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>
                 Cancel
               </button>
-              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Modificar</button>
+              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={updateState}>Modificar</button>
             </div>
           </div>
         </div>

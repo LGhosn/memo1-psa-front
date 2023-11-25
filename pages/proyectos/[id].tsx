@@ -3,10 +3,14 @@ import { useRouter } from 'next/router';
 import { MainButton } from '@/components/mainButton';
 import { StateButton } from '@/components/stateButton';
 import {useEffect, useState} from "react";
+import { SideBar } from '@/components/sideBar';
+import { projectSideBarItems } from '@/utils/routes';
 
 export default function Page() {
-  const [proyecto, setList] = useState({})
-    const [loading, setLoading] = useState(true)
+  const [proyecto, setList] = useState([])
+  const [loading, setLoading] = useState(true)  
+  const router = useRouter();
+  const { id } = router.query;
 
     useEffect(() => {
         fetch(`https://psa-project-managment.onrender.com/api/v1/projects/project/name/${id}`)
@@ -17,13 +21,13 @@ export default function Page() {
             setList(res)
             setLoading(false)
             })
-    }, [])
+    }, [id])
 
-const router = useRouter();
-const { id } = router.query;
 /*La idea es usar el id de la pagina para traer el proyecto*/
 return (
-   <div className="flex  justify-center">
+  <div className="flex flex-row">
+    <SideBar items={projectSideBarItems}></SideBar>
+   <div className="container max-w-2xl mx-auto mt-8">
      <div className="border-4 border-blue-500" style={{ width: 900, height: 500, marginTop:"20px" }}>
        <h1 className="text-4xl mb-5 font-bold" style={{textAlign:'center', marginTop:"20px"}}>{id}</h1>
        <div className="flex items-center text-gray-900">Descripcion:{proyecto['description']}</div>
@@ -48,6 +52,7 @@ return (
                 fontSize='1rem'/>
        
     </div>
+   </div>
    </div>
 );
 }
