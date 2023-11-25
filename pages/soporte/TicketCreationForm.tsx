@@ -25,7 +25,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
             // @ts-ignore
             data?.map(e => {
               let opt = document.createElement('option');
-              opt.value       = e['id']
+              opt.value       = e['id'] + ';' + e['CUIT']
               opt.innerText   = e['razon social'];
               // @ts-ignore
               select.appendChild(opt);
@@ -48,35 +48,42 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     let priority = document.getElementById("priority")
     let typeOfProblem = document.getElementById("typeOfProblem")
 
+    const data = {
+      // @ts-ignore
+      "title": title.value,
+      // @ts-ignore
+      "description": description.value,
+      // @ts-ignore
+      "priority": priority.value,
+      // @ts-ignore
+      "severity": severity.value,
+      // @ts-ignore
+      "state": "OPEN",
+      // @ts-ignore
+      "type": typeOfProblem.value,
+      // @ts-ignore
+      "customerId": customers.value.split(';')[0],
+      // @ts-ignore
+      "customerCUIT": customers.value.split(';')[1],
+      // @ts-ignore
+      "customerName": customers[customers.selectedIndex].text,
+    }
+    console.log(data)
     // @ts-ignore
     fetch('https://psa-support-management.onrender.com/tickets/', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        'Accept': '*/*',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({
-        // @ts-ignore
-        "description": description.innerText,
-        // @ts-ignore
-        "priority": priority.getAttribute('value'),
-        // @ts-ignore
-        "severity": severity.value,
-        // @ts-ignore
-        "state": "OPEN",
-        // @ts-ignore
-        "title": title.innerText,
-        // @ts-ignore
-        "type": typeOfProblem.value
-      })
+      body: JSON.stringify(data)
     })
         .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+        })
         // @ts-ignore
         .catch((error) => setError("No se pudo crear el ticket"))
-        /*.then((response) => {
-          navigate('/soporte/tickets')
-        })*/
   }
 
   return (
@@ -132,8 +139,8 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
                       <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Tipo de problema</label>
                         <select id="typeOfProblem" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option value={"INCIDENT"}>Consulta</option>
-                          <option value={"QUERY"}>Incidente</option>
+                          <option value={"QUERY"}>Consulta</option>
+                          <option value={"INCIDENT"}>Incidente</option>
                         </select>
                       </div>
                     </div>
