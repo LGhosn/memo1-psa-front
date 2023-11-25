@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { Form } from './form';
+import {TicketCreationForm} from "@/pages/soporte/TicketCreationForm";
 
 type Props = {
   title: string;
 };
 
-export const Button = ( {title }: Props) => {
+export const ButtonForCreation = ( {title }: Props) => {
   const [open, setOpen] = useState(false);
 
   const openForm = () => {
@@ -26,7 +26,7 @@ export const Button = ( {title }: Props) => {
         </button>
         {open && (
             <>
-              <Form openForm={open} setOpenForm={setOpen} title={title}/>
+              <TicketCreationForm openForm={open} setOpenForm={setOpen} title={title}/>
             </>
         )}
       </>

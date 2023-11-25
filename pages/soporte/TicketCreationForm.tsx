@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Link from "next/link";
+import {useEffect, useState} from "react";
+
 
 type PropsForm = {
   title: string;
@@ -7,15 +7,37 @@ type PropsForm = {
   setOpenForm: (value: boolean) => void
 };
 
-export function Form({ title, openForm, setOpenForm }: PropsForm) {
+export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) {
 
-  function toggleForm() {
-    setOpenForm(!openForm);
-  }
+  const [response , setResponse] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    setLoading(true)
+    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
+        .then(response => response.json())
+        .then(data => {
+          setResponse(data);
+          let select = document.getElementById('selectToLoad');
+          // @ts-ignore
+          let opts = document.getElementById('selectToLoad').length;
+          if (opts < 3) {
+            // @ts-ignore
+            data?.map(e => {
+              let opt = document.createElement('option');
+              opt.innerText = e['razon social'];
+              // @ts-ignore
+              select.appendChild(opt);
+            });
+          }
+        })
+        .catch(error => setError(error))
+        .finally(() => setLoading(false))
+  }, []);
 
-  function closeForm() {
-    setOpenForm(false);
-  }
+  function toggleForm() { setOpenForm(!openForm); }
+
+  function closeForm() { setOpenForm(false); }
 
   return (
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -32,10 +54,17 @@ export function Form({ title, openForm, setOpenForm }: PropsForm) {
                     <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
                     <div className="mt-2">
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Nombre</label>
-                        <div className="mt-1">
-                          <input type="text" name="name" id="name" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900" />
-                        </div>
+                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Cliente</label>
+                        <select id="selectToLoad" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          { error && <option>Error al obtener clientes..</option>}
+                          { loading && <option>Cargando clientes..</option>}
+                        </select>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                          Username
+                        </label>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username"/>
                       </div>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Descripción</label>
@@ -45,12 +74,6 @@ export function Form({ title, openForm, setOpenForm }: PropsForm) {
                       </div>
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Fecha de inicio</label>
-                        <div className="mt-1">
-                          <input type="date" name="date" id="date" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900" />
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Fecha de fin</label>
                         <div className="mt-1">
                           <input type="date" name="date" id="date" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900" />
                         </div>
