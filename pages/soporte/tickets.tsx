@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import {ButtonForCreation} from "@/pages/soporte/ButtonForCreation";
 
+
 export default function Tickets() {
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
