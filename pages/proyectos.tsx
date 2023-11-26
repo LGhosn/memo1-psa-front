@@ -7,6 +7,7 @@ import HeaderItem from "@/components/headerItem";
 import { SideBar } from "@/components/sideBar";
 import { supportSideBarItems } from "@/utils/routes";
 import Loading from "@/components/loading";
+import { ProjectCreationButton } from "@/components/proyectos/createProjectButton";
 
 export default function Clientes() {
     const [list, setList] = useState([])
@@ -29,7 +30,8 @@ export default function Clientes() {
         <SideBar items={supportSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-gray-400">Proyecto</h1>
+            <h1 className="text-3xl font-bold decoration-gray-400">Proyectos</h1>
+            <ProjectCreationButton title="Crear proyecto" />
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
@@ -53,7 +55,7 @@ export default function Clientes() {
                 </table>
               </div>
             </div>
-          </div><Button title="Crear tarea" height = "50px" width = "150px" fontSize='1.2rem' />
+          </div>
           </>
           }
         </div>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { MainButton } from '@/components/mainButton';
 import { StateButton } from '@/components/stateButton';
 import {useEffect, useState} from "react";
-
+import { ButtonDeleteProject } from '@/components/proyectos/buttonDeleteProject';
 export default function Page() {
   const [proyecto, setList] = useState({})
     const [loading, setLoading] = useState(true)
@@ -46,6 +46,7 @@ return (
                 height = "50px"
                 width = "150px"
                 fontSize='1rem'/>
+      <ButtonDeleteProject title="Borrar" projectId={proyecto['id']} />
        
     </div>
    </div>
