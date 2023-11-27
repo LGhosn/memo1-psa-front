@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import ProjectGridRow from "@/components/projectGridRow";
-import { MainButton } from "@/components/mainButton"
-import { Button } from "@/components/button"
-
 import HeaderItem from "@/components/headerItem";
 import { SideBar } from "@/components/sideBar";
-import { supportSideBarItems } from "@/utils/routes";
+import { projectSideBarItems } from "@/utils/routes";
 import Loading from "@/components/loading";
+import { ProjectCreationButton } from "@/components/proyectos/buttonCreateProject";
+import { State } from "@/components/state";
+import { StateButton } from "@/components/stateButton";
 
-export default function Clientes() {
+export default function Proyectos() {
     const [list, setList] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -26,10 +26,11 @@ export default function Clientes() {
         <>
         
     <div className="flex flex-row" >
-        <SideBar items={supportSideBarItems}></SideBar>
+        <SideBar items={projectSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-gray-400">Proyecto</h1>
+            <h1 className="text-3xl font-bold decoration-gray-400">Proyectos</h1>
+            <ProjectCreationButton title="Crear proyecto" />
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
@@ -53,22 +54,10 @@ export default function Clientes() {
                 </table>
               </div>
             </div>
-          </div><Button title="Crear tarea" height = "50px" width = "150px" fontSize='1.2rem' />
+          </div> 
           </>
           }
         </div>
-      </div>
-
-            <div style={{ display: "flex" ,flexDirection: "row", gap:'20rem', margin: "30px 0 0 80px"}}>
-            <Button 
-                title="Nuevo proyecto" 
-                height = "50px"
-                width = "150px"
-                fontSize='1rem'/>
-            <MainButton
-                title="Volver" 
-                href="/"
-            />
       </div>
         </>
     )
