@@ -75,7 +75,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     }
     console.log(data)
     // @ts-ignore
-    fetch('https://psa-support-management.onrender.com/tickets', {
+    fetch('https://psa-support-management.onrender.com/tickets/', {
       method: 'POST',
       headers: {
         'Accept': '*/*',
@@ -116,7 +116,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
                       <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Titulo</label>
                         <div className="mt-1">
-                          <textarea name="title" id="title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                          <input name="title" id="title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></input>
                         </div>
                       </div>
                       <div>
