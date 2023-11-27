@@ -3,7 +3,7 @@ import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ButtonDeleteProject } from "@/components/proyectos/buttonDeleteProject";
+import { ButtonDeleteTask } from "@/components/tareas/buttonDeleteTask";
 
 export default function Tarea() {
   const [loading, setLoading] = useState(true)
@@ -69,8 +69,9 @@ export default function Tarea() {
         </h1>
        <div className='flex justify-center'>
        </div>
-       
+       <ButtonDeleteTask title="Borrar" taskId={id} />
     </div>
+    
     }
     </div>
    </div>

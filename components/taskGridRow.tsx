@@ -10,7 +10,7 @@ export default function TaskGridRow({task}: {task: any}) {
                 <div className="flex items-center text-gray-900">{task['status']}</div>
             </td>
 
-            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${task['Nombre']}`}>
+            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`${task['Nombre']}`}>
                 <MainButton href= {`/tareas/${task['id']}`} title= "Ver tarea"/>
             </td>
 
