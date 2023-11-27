@@ -12,7 +12,7 @@ export default function Tickets() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://psa-support-management.onrender.com/tickets")
+    fetch("https://psa-support-management.onrender.com/tickets/")
     .then((res) => {
       return res.json()
     }).then((res) => {
