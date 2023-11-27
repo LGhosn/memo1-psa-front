@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import {TicketCreationForm} from "@/pages/soporte/TicketCreationForm";
+import {TicketCreationForm} from "@/pages/soporte/tickets/TicketCreationForm";
 
 type Props = {
   title: string;

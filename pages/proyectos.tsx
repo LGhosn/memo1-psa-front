@@ -68,9 +68,7 @@ export default function Clientes() {
             <MainButton
                 title="Volver" 
                 href="/"
-                height = "50px"
-                width = "150px"
-                fontSize='1.2rem'/>
+            />
       </div>
         </>
     )

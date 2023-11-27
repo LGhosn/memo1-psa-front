@@ -7,13 +7,12 @@ import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import {ButtonForCreation} from "@/pages/soporte/ButtonForCreation";
 
-
 export default function Tickets() {
   const [list, setList] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://psa-support-management.onrender.com/tickets/")
+    fetch("https://psa-support-management.onrender.com/tickets")
     .then((res) => {
       return res.json()
     }).then((res) => {
@@ -28,7 +27,7 @@ export default function Tickets() {
         <SideBar items={supportSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-gray-400">Tickets</h1>
+            <h1 className="text-3xl font-bold decoration-black">Tickets</h1>
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:

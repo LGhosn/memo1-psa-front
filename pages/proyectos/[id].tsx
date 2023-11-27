@@ -36,15 +36,9 @@ return (
         <div className="flex items-center text-gray-900">Estado:{ /*proyecto[status]*/}</div>
         <div className="flex items-center text-gray-900">Lider:{proyecto['leader']}</div>
        <div className='flex justify-center'>
-        <MainButton href= {`/proyectos/${proyecto['id']}/tareas`} title= "Ver Tareas"
-                    height = "50px"
-                    width = "120px"
-                    fontSize='1rem'/>
+        <MainButton href= {`/proyectos/${proyecto['id']}/tareas`} title= "Ver Tareas"/>
        </div>
-       <MainButton href= {`/proyectos`} title= "Volver"
-                    height = "50px"
-                    width = "120px"
-                    fontSize='1rem'/>
+       <MainButton href= {`/proyectos`} title= "Volver"/>
       <StateButton 
                 title="Modificar" 
                 height = "50px"

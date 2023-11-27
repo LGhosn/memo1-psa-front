@@ -36,9 +36,14 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
         .finally(() => setLoading(false))
   }, []);
 
-  function toggleForm() { setOpenForm(!openForm); }
+  function toggleForm() { 
+    setOpenForm(!openForm); 
+  }
 
-  function closeForm() { setOpenForm(false); }
+  function closeForm() { 
+    setOpenForm(false); 
+    parent.window.location.reload();
+  }
 
   function createTicket() {
     let customers = document.getElementById("customers")
@@ -70,7 +75,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     }
     console.log(data)
     // @ts-ignore
-    fetch('https://psa-support-management.onrender.com/tickets/', {
+    fetch('https://psa-support-management.onrender.com/tickets', {
       method: 'POST',
       headers: {
         'Accept': '*/*',
@@ -81,6 +86,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
         .then((res) => res.json())
         .then((data) => {
           console.log(data)
+          closeForm()
         })
         // @ts-ignore
         .catch((error) => setError("No se pudo crear el ticket"))

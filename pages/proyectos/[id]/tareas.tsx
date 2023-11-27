@@ -66,12 +66,7 @@ export default function Tareas() {
                 height = "50px"
                 width = "150px"
                 fontSize='1rem'/>
-            <MainButton
-                title="Volver" 
-                href="/"
-                height = "50px"
-                width = "150px"
-                fontSize='1.2rem'/>
+            <MainButton title="Volver" href="/"/>
       </div>
         </>
     )

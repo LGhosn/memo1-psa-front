@@ -5,12 +5,9 @@ import Link from "next/link"
 type Props = {
   href: string;
   title: string;
-  height: string;
-  width: string;
-  fontSize: string;
 };
 
-export const MainButton = ( { href, title,height,width,fontSize}: Props) => {
+export const MainButton = ( { href, title}: Props) => {
   const router = useRouter()
 
   return (
@@ -21,11 +18,7 @@ export const MainButton = ( { href, title,height,width,fontSize}: Props) => {
 
       >
       
-        <span className={`flex-1 ml-2 text-left whitespace-nowrap ${router.asPath === href && "font-bold"}`}
-         style={{
-          fontSize,
-          textAlign: "center"
-       }}>
+        <span className={`flex-1 ml-2 whitespace-nowrap text-center ${router.asPath === href && "font-bold"}`}>
           {title}
         </span>
       </div>
