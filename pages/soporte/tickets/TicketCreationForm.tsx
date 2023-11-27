@@ -73,7 +73,6 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
       // @ts-ignore
       "customerName": customers[customers.selectedIndex].text,
     }
-    console.log(data)
     // @ts-ignore
     fetch('https://psa-support-management.onrender.com/tickets/', {
       method: 'POST',
@@ -85,7 +84,6 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           closeForm()
         })
         // @ts-ignore
