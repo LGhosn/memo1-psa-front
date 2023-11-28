@@ -3,8 +3,6 @@ import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-import { ButtonAction } from "@/components/proyectos/buttonActionProject";
 import { ButtonActionTask } from "@/components/tareas/buttonActionTask";
 
 export default function Tarea() {
