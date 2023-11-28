@@ -69,8 +69,12 @@ export default function Tarea() {
         </h1>
        <div className='flex justify-center'>
        </div>     
-       <ButtonActionTask title="Modificar" taskId={id} actionType="modifyTask" projectId={task['projectId']}/>
-       <ButtonActionTask title="Borrar" taskId={id} actionType="deleteTask" projectId={task['projectId']}/>
+       <ButtonActionTask title="Modificar" taskId={id} actionType="modifyTask" projectId={
+        // @ts-ignore 
+        task['projectId']}/>
+       <ButtonActionTask title="Borrar" taskId={id} actionType="deleteTask" projectId={
+        // @ts-ignore 
+        task['projectId']}/>
 
     </div>
     
