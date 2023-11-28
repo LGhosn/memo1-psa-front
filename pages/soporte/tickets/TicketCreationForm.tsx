@@ -83,7 +83,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
       // @ts-ignore
       "customerCUIT": customers.value.split(';')[1],
       // @ts-ignore
-      "customerName": customers[customers.selectedIndex].text,
+      "customerRS": customers[customers.selectedIndex].text,
       // // @ts-ignore
       // "employees": [
       //   {
@@ -109,7 +109,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     })
         .then((res) => res.json())
         .then((data) => {
-          // closeForm()
+          closeForm()
         })
         // @ts-ignore
         .catch((error) => setError("No se pudo crear el ticket"))
