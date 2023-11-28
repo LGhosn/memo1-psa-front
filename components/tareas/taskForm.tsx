@@ -1,16 +1,26 @@
 import {useEffect, useState} from "react";
+import { useRouter } from "next/router";
+import SuccessfulNotification from "../successfulNotification";
 
 type PropsForm = {
   title: string;
   projectId: string;
-  openForm: boolean
   setOpenForm: (value: boolean) => void
 };
 
-export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: PropsForm) {
+export function TaskCreationForm({ title,projectId, setOpenForm }: PropsForm) {
   const [response , setResponse] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [modalSuccessful, setModalSuccessful] = useState(false);
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  function reloadPage(){
+    router.reload() 
+  }
+
+  function closeForm() { setOpenForm(false); }
   
 
   useEffect( () => {
@@ -37,15 +47,10 @@ export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: Pro
         .finally(() => setLoading(false))
   }, []);
 
-  function toggleForm() { setOpenForm(!openForm); }
-
-  function closeForm() { setOpenForm(false); }
-
   function createTask() {
     let name = document.getElementById("name")
     let description = document.getElementById("description")
     let assignedTo = document.getElementById("assignedTo")
-    let totalHours = document.getElementById("totalHours")
 
     const data = {
       // @ts-ignore
@@ -53,11 +58,7 @@ export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: Pro
       // @ts-ignore
       "description": description.value,
       // @ts-ignore
-      "assignedTo": assignedTo[assignedTo.selectedIndex].text,
-      // @ts-ignore
-      "totalHours": totalHours.value,
-
-      "status": "NOT_STARTED"
+      "assignedTo": assignedTo[assignedTo.selectedIndex].text
     }
     console.log(data)
     // @ts-ignore
@@ -68,15 +69,24 @@ export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: Pro
       },
       body: JSON.stringify(data)
     })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-        })
-        // @ts-ignore
-        .catch((error) => setError("No se pudo crear el proyecto"))
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Error en la creación del recurso');
+      }
+      return res.json();
+    })
+    .then(() => {
+      setModalSuccessful(true);
+    })
+    // @ts-ignore
+    .catch((error) => {
+      console.error('Error:', error);
+      setErrorMessage('No se pudo crear el proyecto. Ingreso de valor inválido');
+     })
   }
 
   return (
+    <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -110,15 +120,6 @@ export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: Pro
                           { loading && <option>Cargando empleados..</option>}
                         </select>
                       </div>
-      
-
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Horas estimadas</label>
-                        <div className="mt-1">
-                          <textarea name="totalHours" id="totalHours" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
-                        </div>
-                      </div>
-
                     </div>
                   </div>
                 </div>
@@ -132,5 +133,11 @@ export function TaskCreationForm({ title,projectId, openForm, setOpenForm }: Pro
           </div>
         </div>
       </div>
+      {modalSuccessful && (
+        <>
+        <SuccessfulNotification titleAction="Guardado" actionPage={reloadPage}/>
+        </>
+       )}  
+    </>
   )
 }

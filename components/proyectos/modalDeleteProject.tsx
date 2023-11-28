@@ -1,44 +1,36 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import SuccessfulNotification from "../successfulNotification";
 
 type PropsForm = {
   title: string;
   projectId: string;
-  openForm: boolean;
   setOpenForm: (value: boolean) => void
 };
 
-export function ModalDeleteProject({ title, projectId, openForm, setOpenForm }: PropsForm) {
+export function ModalDeleteProject({ title, projectId, setOpenForm }: PropsForm) {
+  const router = useRouter();
+  const [modalSuccessful, setModalSuccessful] = useState(false);
   function closeForm() {
     setOpenForm(false);
   }
-  const [error, setError] = useState(null)
-  function deleteProject() {
-   
-    const data = {
-      // @ts-ignore
-      "id": projectId
-    }
-    console.log(data)
-    // @ts-ignore
-    fetch(`https://psa-project-managment.onrender.com/api/v1/projects/project/${projectId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-        })
-        // @ts-ignore
-        .catch((error) => setError("No se pudo crear el ticket"))
+  
+  function backPage(){
+    router.push('/proyectos')
   }
+  function deleteProject() {
 
-
+    fetch(`https://psa-project-managment.onrender.com/api/v1/projects/project/${projectId}`, {
+      method: 'DELETE'
+    }).then(() => {
+      setModalSuccessful(true)
+    })
+  }
+  
   return (
-      <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <>
+        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -50,12 +42,13 @@ export function ModalDeleteProject({ title, projectId, openForm, setOpenForm }: 
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
-                    <p>¿Está seguro de querer eliminar?</p>
+                    <p>¿Está seguro de querer eliminar el proyecto?</p>
                   </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>
+                <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" 
+                onClick={closeForm}>
                   Cancelar
                 </button>
                 <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
@@ -66,5 +59,9 @@ export function ModalDeleteProject({ title, projectId, openForm, setOpenForm }: 
           </div>
         </div>
       </div>
+       {modalSuccessful && (
+        <SuccessfulNotification titleAction="Borrado" actionPage={backPage}/>
+         )}
+      </>
   )
 }

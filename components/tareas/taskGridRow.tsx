@@ -1,4 +1,4 @@
-import {MainButton} from "./mainButton" 
+import {MainButton} from "../mainButton" 
 export default function TaskGridRow({task}: {task: any}) {
     return (
         <tr key={`${task['name']}`}>
