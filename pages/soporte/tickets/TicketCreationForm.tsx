@@ -1,3 +1,6 @@
+import InputElement from "@/components/inputElement";
+import SelectElement from "@/components/selectElement";
+import { priorityData, severityData, typeOfProblemData } from "@/utils/ticketInfo";
 import {useEffect, useState} from "react";
 //import {useNavigate} from "react-router-dom";
 
@@ -12,6 +15,8 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
   const [response , setResponse] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [responsables, setResponsables] = useState([])
+  
   useEffect( () => {
     setLoading(true)
     fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
@@ -34,11 +39,17 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
         })
         .catch(error => setError(error))
         .finally(() => setLoading(false))
-  }, []);
 
-  function toggleForm() { 
-    setOpenForm(!openForm); 
-  }
+    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+    .then(response => response.json())
+    .then(data => {
+      const nuevosResponsables = data.map((item: { legajo: any; Apellido: any; Nombre: any; }) => ({
+        value: item.legajo,
+        label: `${item.Apellido}, ${item.Nombre}`
+      }));
+      setResponsables(nuevosResponsables)
+    })
+  }, []);
 
   function closeForm() { 
     setOpenForm(false); 
@@ -52,6 +63,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     let severity = document.getElementById("severity")
     let priority = document.getElementById("priority")
     let typeOfProblem = document.getElementById("typeOfProblem")
+    let r = document.getElementById("responsables")
 
     const data = {
       // @ts-ignore
@@ -72,6 +84,19 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
       "customerCUIT": customers.value.split(';')[1],
       // @ts-ignore
       "customerName": customers[customers.selectedIndex].text,
+      // // @ts-ignore
+      // "employees": [
+      //   {
+      //     // @ts-ignore
+      //     "name": r[r.selectedIndex].text.split(',')[1].replace(/^\s+|\s+$/g, ''),
+      //     // @ts-ignore
+      //     "lastname": r[r.selectedIndex].text.split(',')[0].replace(/^\s+|\s+$/g, ''),
+      //     "tickets": [
+      //       "prueba"
+      //     ]
+      //   }
+      // ]
+
     }
     // @ts-ignore
     fetch('https://psa-support-management.onrender.com/tickets/', {
@@ -84,7 +109,7 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
     })
         .then((res) => res.json())
         .then((data) => {
-          closeForm()
+          // closeForm()
         })
         // @ts-ignore
         .catch((error) => setError("No se pudo crear el ticket"))
@@ -106,47 +131,17 @@ export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) 
                     <div className="mt-2">
                       <div>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Cliente</label>
-                        <select id="customers" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="customers" className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                           { error && <option>Error al obtener clientes..</option>}
                           { loading && <option>Cargando clientes..</option>}
                         </select>
                       </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Titulo</label>
-                        <div className="mt-1">
-                          <input name="title" id="title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></input>
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Descripción</label>
-                        <div className="mt-1">
-                          <textarea name="description" id="description" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Prioridad</label>
-                        <select id="priority" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option value={"LOW"}>Baja</option>
-                          <option value={"MEDIUM"}>Media</option>
-                          <option value={"HIGH"}>Alta</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Severidad</label>
-                        <select id="severity" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option>S1</option>
-                          <option>S2</option>
-                          <option>S3</option>
-                          <option>S4</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Tipo de problema</label>
-                        <select id="typeOfProblem" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          <option value={"QUERY"}>Consulta</option>
-                          <option value={"INCIDENT"}>Incidente</option>
-                        </select>
-                      </div>
+                      <InputElement title="Título" id="title" type="text" readonly={false}/>
+                      <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
+                      <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
+                      <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
+                      <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
+                      <SelectElement title="Responsable" id="responsables" options={responsables} multiple={false}/>
                     </div>
                   </div>
                 </div>

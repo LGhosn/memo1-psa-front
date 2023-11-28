@@ -9,41 +9,16 @@ import { supportSideBarItems } from "@/utils/routes";
 import { priorityData, severityData, stateData } from "@/utils/ticketInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Select from "react-select/dist/declarations/src/Select";
-
+import { setElementInnerHtml, setElementValue, setSelectValue } from "@/utils/utils";
 
 export default function Ticket() {
   const [loading, setLoading] = useState(true)
   const [ticket, setTicket] = useState([])
   const [responsables, setResponsables] = useState([])
   const [notification, setNotification] = useState(false)
+  const [responsablesAsignados, setResponsablesAsignados] = useState([])
   const router = useRouter();
   const { id } = router.query;
-
-
-  const setElementInnerHtml = (elementId: string, innerHtml: string) => {
-    const element = document.getElementById(elementId)
-    if (element) {
-      element.innerHTML = innerHtml
-    }
-  }
-  
-  const setElementValue = (elementId: string, value: string) => {
-    const element = document.getElementById(elementId) as HTMLInputElement
-    if (element) {
-      element.value = value
-    }
-  }
-
-  const setSelectValue = (selectId: string, value: any) => {
-    const select = document.getElementById(selectId) as HTMLSelectElement
-    if (select) {
-      const option = Array.from(select.options).find((option) => option.value === value)
-      if (option) {
-        option.selected = true
-      }
-    }
-  }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function setupData() {
@@ -63,6 +38,8 @@ export default function Ticket() {
     setElementValue("customerRS", ticket.customerRS);
     // @ts-ignore
     setElementValue("customerCUIT", ticket.customerCUIT);
+    // @ts-ignore
+    setElementValue("creationDate", ticket.creationDate);
   }
 
   useEffect(() => {
@@ -109,11 +86,28 @@ export default function Ticket() {
 
   function guardarTicket() {
     // @ts-ignore
-    let state = document.getElementById("state").value
+    const state = document.getElementById("state").value
     // @ts-ignore
-    let severity = document.getElementById("severity").value
+    const severity = document.getElementById("severity").value
     // @ts-ignore
-    let priority = document.getElementById("priority").value
+    const priority = document.getElementById("priority").value
+    // const responsable = {}
+    // for (let i = 0; i < responsablesAsignados.length; i++) {
+    //   // @ts-ignore
+    //   const legajo = responsablesAsignados[i].split(',')[0]
+    //   // @ts-ignore
+    //   const nombre = responsablesAsignados[i].split(',')[1].replace(/^\s+|\s+$/g, '')
+    //   // @ts-ignore
+    //   const apellido = responsablesAsignados[i].split(',')[2]
+    //   // @ts-ignore
+    //   responsable[i] = {
+    //     "legajo": legajo,
+    //     "name": nombre,
+    //     "lastname": apellido,
+    //     "tickets": []
+    //   }
+    // }
+
 
     fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateFields?newState=${state}&newSeverity=${severity}&newPriority=${priority}`, {
       method: 'PATCH',
@@ -124,8 +118,26 @@ export default function Ticket() {
     }).then((res) => {
       router.reload()
     })
+
+    // fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateResponsible?NewResponsible=${responsable}`, {
+    //   method: 'PATCH',
+    //   headers: {
+    //     'accept': '*/*',
+    //     'Content-Type': 'application/json'
+    //   },
+    // }).then((res) => {
+    //   router.reload()
+    // })
   }
 
+  // @ts-ignore
+  const handleSelectChange = (event) => {
+    // @ts-ignore
+    const opcionesSeleccionadas = Array.from(event.target.selectedOptions, (option) => option.value + ','+ option.text);
+    // @ts-ignore
+    setResponsablesAsignados(opcionesSeleccionadas);
+    console.log(opcionesSeleccionadas)
+  }
   return (
     <div className="flex flex-row">
     <SideBar items={supportSideBarItems}></SideBar>
@@ -140,16 +152,17 @@ export default function Ticket() {
         <h1 className="text-4xl mb-5 font-bold text-black text-center" id="title" ></h1>
         <div className="flex flex-row space-x-10">
         <div className="pr-2">
-          <InputElement title="Tipo de problema" id="typeOfProblem" type="text"/>
-          <SelectElement title="Estado" id="state" options={stateData} />
-          <SelectElement title="Prioridad" id="priority" options={priorityData} />
-          <SelectElement title="Severidad" id="severity" options={severityData} />
+          <SelectElement title="Estado" id="state" options={stateData} multiple={false}/>
+          <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
+          <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
+          <SelectElement title="Responsable" id="responsables" options={responsables} multiple onChange={handleSelectChange}/>
         </div>
         <div>
-          <InputElement title="Razón Social Cliente" id="customerRS" type="text" />
-          <InputElement title="CUIT Cliente" id="customerCUIT" type="text"/>
-          <SelectElement title="Responsable" id="responsables" options={responsables} />
-          <InputElement title="Descripción" id="description" type="textarea" />
+          <InputElement title="Tipo de problema" id="typeOfProblem" type="text" readonly/>
+          <InputElement title="Razón Social Cliente" id="customerRS" type="text" readonly/>
+          <InputElement title="CUIT Cliente" id="customerCUIT" type="text" readonly/>
+          <InputElement title="Fecha de creación" id="creationDate" type="text" readonly/>
+          <InputElement title="Descripción" id="description" type="textarea" readonly/>
         </div>
         </div>
       </div>

@@ -60,3 +60,14 @@ export const stateData = [
     label: "Resuelto"
   }
 ]
+
+export const typeOfProblemData = [
+  {
+    value: "QUERY",
+    label: "Consulta"
+  },
+  {
+    value: "INCIDENT",
+    label: "Incidente"
+  }
+]
