@@ -5,7 +5,7 @@ import { supportSideBarItems } from "@/utils/routes";
 import { Button } from "@/components/button";
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
-import {ButtonForCreation} from "@/pages/soporte/ButtonForCreation";
+import ButtonForCreation from "@/pages/soporte/ButtonForCreation";
 
 export default function Tickets() {
   const [list, setList] = useState([])

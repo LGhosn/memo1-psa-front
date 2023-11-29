@@ -10,7 +10,7 @@ type PropsForm = {
   setOpenForm: (value: boolean) => void
 };
 
-export function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) {
+export default function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) {
   //let navigate = useNavigate();
   const [response , setResponse] = useState(null)
   const [loading, setLoading] = useState(true)

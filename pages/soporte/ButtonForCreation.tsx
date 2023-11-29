@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import {TicketCreationForm} from "@/pages/soporte/tickets/TicketCreationForm";
+import TicketCreationForm from '@/pages/soporte/tickets/TicketCreationForm';
 
 type Props = {
   title: string;
 };
 
-export const ButtonForCreation = ( {title }: Props) => {
+export default function ButtonForCreation( {title }: Props) {
   const [open, setOpen] = useState(false);
 
   const openForm = () => {
