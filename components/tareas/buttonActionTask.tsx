@@ -20,8 +20,6 @@ export const ButtonActionTask = ( {title, taskId, projectId, actionType}: Props)
     setOpen(!open);
  };
 
- 
-
  const getActionComponent = () => {
     switch (actionType) {
       case 'deleteTask':
