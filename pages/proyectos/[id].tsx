@@ -72,7 +72,7 @@ export default function Proyecto () {
     <div className="flex flex-row">
     <SideBar items={projectSideBarItems}></SideBar>
     
-    <div className="container max-w-4xl	mx-auto mt-8">
+    <div className="container max-w-4xl	mx-auto">
       {
     loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
     <>
