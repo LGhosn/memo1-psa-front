@@ -10,7 +10,7 @@ export const SideBar = ({ items }: { items: ISidebarItem[] }) => {
     setSelected(router.pathname);
   }, [router.pathname]);
   return (
-    <div className="flex flex-col w-64 h-screen bg-blue-300 border-r">
+    <div className="flex flex-col w-64 full-screen bg-blue-300 border-r">
       <nav>
         <ul>
           {items.map((item) => (
