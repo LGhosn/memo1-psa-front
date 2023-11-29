@@ -26,7 +26,7 @@ export const ButtonActionTask = ( {title, taskId, projectId, actionType}: Props)
     switch (actionType) {
       case 'deleteTask':
         return (
-          <ModalDelete setOpenForm={setOpen} title={title} urlBackPage={urlBackPage} url={urlTask} />
+          <ModalDelete setOpenForm={setOpen} elementType='tarea' urlBackPage={urlBackPage} url={urlTask} />
         );
       case 'modifyTask':
         return (

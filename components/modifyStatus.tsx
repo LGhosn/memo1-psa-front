@@ -49,11 +49,12 @@ export function ModifyStatus({setOpenStatus , title, url}: PropsForm) {
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <h1 className="text-xl font-bold leading-6 text-gray-900 mb-4">Modificacion de estados</h1>
                   <div className="mt-2">
                   <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Estado de {title} </label>
+                      <label htmlFor="email" className="text-base block font-medium text-gray-700">Estado de {title} </label>
                       <div className="mt-1">
-                        <select id="state" name="state" autoComplete="state" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900">
+                        <select id="state" name="state" autoComplete="state" className="border border-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-base  rounded-md text-gray-900">
                           <option value={"notStarted"}>No iniciado</option>
                           <option value={"inProgress"}>En progreso</option>
                           <option value={"completed"}>Finalizado</option>
@@ -66,18 +67,22 @@ export function ModifyStatus({setOpenStatus , title, url}: PropsForm) {
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>
-                Cancel
-              </button>
-              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" 
-              onClick={updateState}>Modificar</button>
+            
+                <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                  Cancelar</button>
+                  <button type="button" onClick={updateState} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                   Modificar
+                </button>
             </div>
+            
+            
+
           </div>
         </div>
       </div>
     </div>
     {modalSuccessful && (
-      <SuccessfulNotification titleAction="Modificado" actionPage={reloadPage}/>
+      <SuccessfulNotification titleAction="modificado" actionPage={reloadPage}/>
     )}
     </>
   )

@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import SuccessfulNotification from "./successfulNotification";
 
 type PropsForm = {
-  title: string;
+  elementType: string;
   urlBackPage: string;
   url: string;
   setOpenForm: (value: boolean) => void
 };
 
-export function ModalDelete({ title, setOpenForm, urlBackPage, url }: PropsForm) {
+export function ModalDelete({ elementType, setOpenForm, urlBackPage, url }: PropsForm) {
   const router = useRouter();
   const [modalSuccessful, setModalSuccessful] = useState(false);
   function closeForm() {
@@ -36,30 +36,29 @@ export function ModalDelete({ title, setOpenForm, urlBackPage, url }: PropsForm)
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-
             <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
-                    <p>¿Está seguro de querer eliminar?</p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>
-                  Cancelar
+              
+           
+        
+            
+            <div className="p-4 md:p-5 text-center">
+                <svg className="mx-auto mb-4 text-red-500 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h3 className="mb-5 text-lg  text-black font-semibold dark:text-gray-400">
+                  ¿Está seguro de querer borrar este {elementType}?</h3>
+                <button type="button" onClick={deleteTask} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                    Si, estoy seguro.
                 </button>
-                <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                onClick={deleteTask}>
-                    Borrar</button>
-              </div>
+                <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                  No, cancelar.</button>
+            </div>
             </div>
           </div>
         </div>
       </div>
       {modalSuccessful && (
-        <SuccessfulNotification titleAction="Borrado" actionPage={backPage}/>
+        <SuccessfulNotification titleAction="borrado" actionPage={backPage}/>
          )}
       </>
   )

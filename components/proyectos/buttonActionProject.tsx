@@ -24,7 +24,7 @@ export const ButtonActionProject = ( {title, id, actionType}: Props) => {
     switch (actionType) {
       case 'deleteProject':
           return (
-            <ModalDelete setOpenForm={setOpen} title={title} urlBackPage={urlBackPage} url={urlProject} />
+            <ModalDelete setOpenForm={setOpen} elementType='proyecto' urlBackPage={urlBackPage} url={urlProject} />
         ); 
       case 'modifyProject':
         return (
