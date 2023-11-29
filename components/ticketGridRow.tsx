@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-export default function TaskGridRow({ task }: {task: any}) {
+export default function TicketGridRow({ task }: {task: any}) {
     const router = useRouter()
 
     function openTicket() {
