@@ -1,18 +1,18 @@
 import Loading from "@/components/loading";
-import { MainButton } from "@/components/mainButton";
 import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ButtonActionProject } from "@/components/proyectos/buttonActionProject";
+import { ViewTask } from "@/components/tareas/buttonViewTask";
 
 export default function Proyecto () {
   const [loading, setLoading] = useState(true)
   const [proyecto, setProyecto] = useState([])
   const router = useRouter();
   const { id } = router.query;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   function setupData() {
+    let statusText = ''
     let description = document.getElementById("description")
     let status = document.getElementById("status")
     let creationDate = document.getElementById("creationDate")
@@ -20,15 +20,32 @@ export default function Proyecto () {
     let leader = document.getElementById("leader")
 
     // @ts-ignore
-    description.innerText = `Descripción:${proyecto['description']}`
+    if (proyecto['status'] === "NOT_STARTED") {
+      statusText = "INICIADO"
+      // @ts-ignore
+     } else if (proyecto['status'] === "IN_PROGRESS") {
+      statusText = "EN PROGRESO"
+      // @ts-ignore
+     } else if (proyecto['status'] === "COMPLETED") {
+      statusText = "COMPLETADO"
+      // @ts-ignore
+     } else if (proyecto['status'] === "BLOCKED") {
+      statusText = "BLOQUEADO"
+     }
+     
+     // @ts-ignore
+     let creationDateArray: string[] = (proyecto['creationDate']).split('T');
+    
     // @ts-ignore
-    status.innerText = `Estado:${proyecto['status']}`
+     description.innerText = `${proyecto['description']}`
     // @ts-ignore
-    creationDate.innerText = `Fecha de inicio:${proyecto['creationDate']}`
+    status.innerText = `${statusText}`
     // @ts-ignore
-    totalHours.innerText = `Horas estimadas:${proyecto['totalHours']}`
+    creationDate.innerText = `${(creationDateArray[0]).split('-').reverse().join("/")}`
     // @ts-ignore
-    leader.innerText = `Líder de proyecto:${proyecto['leader']}`
+    totalHours.innerText = `${proyecto['totalHours']}`
+    // @ts-ignore
+    leader.innerText = `${proyecto['leader']}`
   }
 
 
@@ -58,33 +75,59 @@ export default function Proyecto () {
     <div className="container max-w-4xl	mx-auto mt-8">
       {
     loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
+    <>
     
-     <div className="border-4 border-blue-500" style={{ width: 900, height: 500, marginTop:"20px" }}>
-       <h1 className="text-4xl mb-5 font-bold" style={{textAlign:'center', marginTop:"20px"}}>Proyecto {id}</h1>
-        <div className="flex items-center text-gray-900" id="description"></div>
-        <div className="flex items-center text-gray-900" id="status"></div>
-        <div className="flex items-center text-gray-900" id="creationDate"></div>
-        <div className="flex items-center text-gray-900" id="totalHours"></div>
-        <div className="flex items-center text-gray-900" id="leader"></div>
-        <h1>
-          
-        </h1>
-       <div className='flex justify-center'>
-       </div>
-       <MainButton href= {
-        // @ts-ignore 
-       `/proyectos/${proyecto['id']}/tareas`} title= "Ver Tareas"/>  
+     <div className="container max-w-8xl mx-auto mt-8 space-y-50 border-4 border-gray-500" >
+       <h1 className="text-5xl mb-5 font-bold" style={{textAlign:'center', marginTop:"20px"}}>Proyecto {id}</h1>
+        <div className="ml-10 mt-3 flex flex-row">
+          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Fecha de inicio:</h2>
+          <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="creationDate"></div>
+        </div>
+        <div className="ml-10 flex flex-row mt-3">
+          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Horas estimadas:</h2>
+          <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="totalHours"></div>
+          <div className=" mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}}>hrs</div>
+        </div>
 
-       <ButtonActionProject title="Borrar" id={
-        // @ts-ignore
-        proyecto['id']} actionType="deleteProject"/>
-        
-       <ButtonActionProject title="Modificar" id={
-        // @ts-ignore
-        proyecto['id']} actionType="modifyProject"/>
-        
+        <div className="ml-10 flex flex-row mt-3">
+          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Estado del proyecto:</h2>
+          <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="status"></div>
+        </div>
+
+        <div className="ml-10 flex flex-row mt-3">
+          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Líder del proyecto:</h2>
+          <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="leader"></div>
+        </div>
+       
+        <div className="ml-10 mt-10">
+          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Descripción:</h2>
+          <div className="border border-black rounded-2xl" style={{width:400, height:100}}>
+            <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="description"></div>
+          </div>
+        </div>
+        <ViewTask href= {
+        // @ts-ignore 
+       `/proyectos/${proyecto['id']}/tareas`}/> 
     </div> 
+
+    <div className="mt-1 flex flex-row space justify-between">
+        <div>
+          <ButtonActionProject title="Borrar" id={
+          // @ts-ignore
+          proyecto['id']} actionType="deleteProject" style={' bg-red-400 hover:bg-red-600 '}/>
+        </div>
+        <div className="">
+          <ButtonActionProject title="Modificar" id={
+          // @ts-ignore
+          proyecto['id']} actionType="modifyProject" style={' bg-blue-200 hover:bg-blue-600 '}/>
+        </div>
+      </div>
+
+    </>
     }
+    
+     
+       
     </div>
    </div>
   )

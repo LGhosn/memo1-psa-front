@@ -62,20 +62,24 @@ export default function Proyectos() {
         <SideBar items={projectSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-gray-400">Proyectos</h1>
+            <h1 className="ml-16 text-4xl/5 font-bold decoration-gray-400">Listado de proyectos</h1>
           </div>
+          
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
           <>
-          <div className="flex flex-col">
+          <div className="sm:flex sm:flex-row-reverse mr-16">
+            <ButtonActionProject title="Crear proyecto" id='' actionType="createProject" style={' bg-blue-400 hover:bg-blue-600 '}/> 
+          </div>
+          <div className="flex flex-col mt-1 ">
             <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+              <div className="inline-block min-w-[90%] ml-16 overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
                 <table className="min-w-full">
                   <thead>
                     <tr>
                         <HeaderItem title="Nombre" />
                         <HeaderItem title="Estado" />
-                        <HeaderItem title=""/>
+                        <HeaderItem title="ID" />
                     </tr>
                   </thead>
                   <tbody>
@@ -96,7 +100,6 @@ export default function Proyectos() {
               </div>
             </div>
           </div> 
-          <ButtonActionProject title="Crear proyecto" id='' actionType="createProject"/> 
           </>
           }
         </div>

@@ -8,9 +8,10 @@ type Props = {
  title: string;
  id: string | any;
  actionType: string ;
+ style: any;
 };
 
-export const ButtonActionProject = ( {title, id, actionType}: Props) => {
+export const ButtonActionProject = ( {title, id, actionType, style}: Props) => {
  const [open, setOpen] = useState(false);
  let urlBackPage =`/proyectos`
  let urlProject=`https://psa-project-managment.onrender.com/api/v1/projects/project/${id}`
@@ -41,14 +42,11 @@ export const ButtonActionProject = ( {title, id, actionType}: Props) => {
 
  return (
       <>
-        <button onClick={openForm}>
-          <div
-              className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-200 hover:bg-blue-400 dark:text-white dark:hover:bg-blue-700`}
-          >
-          <span className={`flex-1 ml-2 text-left whitespace-nowrap "font-bold"`}>
-            {title}
+        <button onClick={openForm} className={`${style} focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center`}>
+          <span
+          className={`flex-1 ml-2 text-left whitespace-nowrap font-bold text-black`}>
+              {title}
           </span>
-          </div>
         </button>
         {open && getActionComponent()}
       </>
