@@ -1,64 +1,35 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import SuccessfulNotification from "./successfulNotification";
 
 type PropsForm = {
   title: string;
-  taskId: string;
-  openForm: boolean;
+  urlBackPage: string;
+  url: string;
   setOpenForm: (value: boolean) => void
 };
 
-export function ModalDeleteTask({ title, taskId, openForm, setOpenForm }: PropsForm) {
+export function ModalDelete({ title, setOpenForm, urlBackPage, url }: PropsForm) {
+  const router = useRouter();
+  const [modalSuccessful, setModalSuccessful] = useState(false);
   function closeForm() {
     setOpenForm(false);
   }
+  function backPage(){
+    router.push(urlBackPage)
+  }
   const [error, setError] = useState(null)
   function deleteTask() {
-
-    const data = {
-      // @ts-ignore
-      "id": taskId
-    }
-    console.log(data)
-    // @ts-ignore
-    fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/task/4/status/inProgress`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
+    fetch(url, {
+      method: 'DELETE'
+    }).then(() => {
+      setModalSuccessful(true)
     })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-        })
-        // @ts-ignore
-        .catch((error) => setError("No se pudo modificar"))
   }
-   
-  //   const data = {
-  //     // @ts-ignore
-  //     "id": taskId
-  //   }
-  //   console.log(data)
-  //   // @ts-ignore
-  //   fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/task/${taskId}`, {
-  //     method: 'DELETE',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(data)
-  //   })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data)
-  //       })
-  //       // @ts-ignore
-  //       .catch((error) => setError("No se pudo crear el ticket"))
-  // }
-
 
   return (
+    <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -87,5 +58,9 @@ export function ModalDeleteTask({ title, taskId, openForm, setOpenForm }: PropsF
           </div>
         </div>
       </div>
+      {modalSuccessful && (
+        <SuccessfulNotification titleAction="Borrado" actionPage={backPage}/>
+         )}
+      </>
   )
 }

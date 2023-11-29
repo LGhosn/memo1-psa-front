@@ -1,62 +1,43 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import SuccessfulNotification from "./successfulNotification";
+
+
 
 type PropsForm = {
   title: string;
-  openStates: boolean
-  setOpenStates: (value: boolean) => void
+  setOpenStatus: (value: boolean) => void;
+  url: string;
 };
 
-export function State({openStates, setOpenStates }: PropsForm) {
-
-  function toggleForm() {
-    setOpenStates(!openStates);
-  }
+export function ModifyStatus({setOpenStatus , title, url}: PropsForm) {
+  const router = useRouter();
+  const [modalSuccessful, setModalSuccessful] = useState(false);
 
   function closeForm() {
-    setOpenStates(false);
-  }
-
+    setOpenStatus(false);
+    }
+  
+    function reloadPage(){
+      router.reload() 
+    }
   function updateState() {
     const state = document.getElementById("state");
+    // @ts-ignore
+    const stateValue=state[state.selectedIndex].value;
 
-    const data = {
-      "id": 1,
-      "name": "Titulo",
-      // @ts-ignore
-      "description": state[state.selectedIndex].value,
-      "leader": "mili",
-      "creationDate": "2023-11-25T22:30:17.807664",
-      "totalHours": 0
-    }
-
-    fetch("https://psa-project-managment.onrender.com/api/v1/projects/project/1", 
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((res) => {
-      console.log(res)
-      toggleForm()
+    fetch(url+`${stateValue}`, {
+    method: 'PATCH'})
+    .then((res) => {
+      res.json()
+      setModalSuccessful(true)
+      
     })
-
-    // fetch("https://psa-project-managment.onrender.com/api/v1/tasks/task/1/status/notStarted", 
-    // {
-    //   method: 'PATCH',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   // body: JSON.stringify(data)
-    // }).then((res) => {
-    //   console.log(res)
-    //   toggleForm()
-    // })
-
-  }
+}
 
   return (
+    <>
     <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -70,17 +51,16 @@ export function State({openStates, setOpenStates }: PropsForm) {
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                   <div className="mt-2">
                   <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Estado</label>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Estado de {title} </label>
                       <div className="mt-1">
                         <select id="state" name="state" autoComplete="state" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900">
-                          <option value={"IN_PROGRESS"}>En proceso</option>
-                          <option value={"SOLVED"}>Finalizado</option>
-                          <option value={"LOCKED"}>Cancelado</option>
+                          <option value={"notStarted"}>No iniciado</option>
+                          <option value={"inProgress"}>En progreso</option>
+                          <option value={"completed"}>Finalizado</option>
+                          <option value={"blocked"}>Bloqueado</option>
                         </select>
                       </div>
-                    </div>
-                    
-                    
+                    </div>    
                   </div>
                 </div>
               </div>
@@ -89,11 +69,16 @@ export function State({openStates, setOpenStates }: PropsForm) {
               <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>
                 Cancel
               </button>
-              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={updateState}>Modificar</button>
+              <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" 
+              onClick={updateState}>Modificar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    {modalSuccessful && (
+      <SuccessfulNotification titleAction="Modificado" actionPage={reloadPage}/>
+    )}
+    </>
   )
 }

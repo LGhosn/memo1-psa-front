@@ -3,13 +3,14 @@ import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ButtonDeleteTask } from "@/components/tareas/buttonDeleteTask";
+import { ButtonActionTask } from "@/components/tareas/buttonActionTask";
 
 export default function Tarea() {
   const [loading, setLoading] = useState(true)
   const [task, setTask] = useState([])
   const router = useRouter();
   const { id } = router.query;
+
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function setupData() {
@@ -19,7 +20,6 @@ export default function Tarea() {
     let creationDate = document.getElementById("creationDate")
     let assignedTo = document.getElementById("assignedTo")
 
-    console.log(task)
     // @ts-ignore
     name.innerText = `Tarea ${task['name']}`
     // @ts-ignore
@@ -68,8 +68,14 @@ export default function Tarea() {
           
         </h1>
        <div className='flex justify-center'>
-       </div>
-       <ButtonDeleteTask title="Borrar" taskId={id} />
+       </div>     
+       <ButtonActionTask title="Modificar" taskId={id} actionType="modifyTask" projectId={
+        // @ts-ignore 
+        task['projectId']}/>
+       <ButtonActionTask title="Borrar" taskId={id} actionType="deleteTask" projectId={
+        // @ts-ignore 
+        task['projectId']}/>
+
     </div>
     
     }

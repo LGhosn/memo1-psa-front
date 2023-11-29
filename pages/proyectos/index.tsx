@@ -1,12 +1,10 @@
 import {useEffect, useState} from "react";
-import ProjectGridRow from "@/components/projectGridRow";
+import ProjectGridRow from "@/components/proyectos/projectGridRow";
 import HeaderItem from "@/components/headerItem";
 import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import Loading from "@/components/loading";
-import { ProjectCreationButton } from "@/components/proyectos/buttonCreateProject";
-import { State } from "@/components/state";
-import { StateButton } from "@/components/stateButton";
+import { ButtonActionProject } from "@/components/proyectos/buttonActionProject";
 
 export default function Proyectos() {
     const [list, setList] = useState([])
@@ -22,6 +20,41 @@ export default function Proyectos() {
             })
     }, [])
 
+    function createProject() {
+      let name = document.getElementById("name")
+      let description = document.getElementById("description")
+      let leader = document.getElementById("leader")
+      let totalHours = document.getElementById("totalHours")
+  
+      const data = {
+        // @ts-ignore
+        "name": name.value,
+        // @ts-ignore
+        "description": description.value,
+        // @ts-ignore
+        "leader": leader[leader.selectedIndex].text,
+        // @ts-ignore
+        "totalHours": totalHours.value,
+  
+        "status": "NOT_STARTED"
+      }
+      console.log(data)
+      // @ts-ignore
+      fetch('https://psa-project-managment.onrender.com/api/v1/projects', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data)
+          })
+          // @ts-ignore
+          .catch((error) => setError("No se pudo crear el proyecto"))
+    }
+
     return (
         <>
         
@@ -30,7 +63,6 @@ export default function Proyectos() {
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
             <h1 className="text-3xl font-bold decoration-gray-400">Proyectos</h1>
-            <ProjectCreationButton title="Crear proyecto" />
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
@@ -47,14 +79,24 @@ export default function Proyectos() {
                     </tr>
                   </thead>
                   <tbody>
-                    {list.map((project) => (
-                      <ProjectGridRow key={project['id']} proyecto={project} />
+                  {loading ? <Loading /> : 
+                        //verifico si la lista está vacía
+                        list.length === 0 ? (
+                        <tr>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                No hay proyectos creados.
+                            </td>
+                        </tr>
+                            ) :
+                    list.map((project) => (
+                      <ProjectGridRow key={project['id']} project={project} />
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
           </div> 
+          <ButtonActionProject title="Crear proyecto" id='' actionType="createProject"/> 
           </>
           }
         </div>

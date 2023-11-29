@@ -1,11 +1,11 @@
 import HeaderItem from "@/components/headerItem";
-import TaskGridRow from "@/components/taskGridRow";
+import TaskGridRow from "@/components/tareas/taskGridRow";
 import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import { useRouter } from 'next/router';
-import { TaskCreationButton } from "@/components/tareas/buttonCreateTask";
+import { ButtonActionTask } from "@/components/tareas/buttonActionTask";
 
 
 export default function Tareas() {
@@ -13,16 +13,17 @@ export default function Tareas() {
   const [loading, setLoading] = useState(true)
   const router = useRouter();
   const projectId = router?.query?.id as string;
-
   useEffect(() => {
-    fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/project/${projectId}`)
-    .then((res) => {
-      return res.json()
-    }).then((res) => {
-        setList(res)
-        setLoading(false)
+    if (router.isReady) {
+      fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/project/${projectId}`)
+        .then((res) => {
+          return res.json()
+        }).then((res) => {
+          setList(res)
+          setLoading(false)
         })
-  }, [])
+   }
+  }, [router.isReady])
 
     return (
 
@@ -52,7 +53,7 @@ export default function Tareas() {
                         list.length === 0 ? (
                         <tr>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                No hay tareas para este proyecto
+                                No hay tareas creadas para este proyecto
                             </td>
                         </tr>
                             ) :
@@ -66,7 +67,7 @@ export default function Tareas() {
               </div>
             </div>
           </div>
-          <TaskCreationButton title="Crear tarea" projectId={projectId} />
+          <ButtonActionTask title="Crear tarea" projectId={projectId} actionType="createTask" taskId=''/>
           </>
           }
         </div>

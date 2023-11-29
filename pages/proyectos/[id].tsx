@@ -4,8 +4,7 @@ import { SideBar } from "@/components/sideBar";
 import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ButtonDeleteProject } from "@/components/proyectos/buttonDeleteProject";
-import { StateButton } from "@/components/stateButton";
+import { ButtonActionProject } from "@/components/proyectos/buttonActionProject";
 
 export default function Proyecto () {
   const [loading, setLoading] = useState(true)
@@ -20,7 +19,6 @@ export default function Proyecto () {
     let totalHours = document.getElementById("totalHours")
     let leader = document.getElementById("leader")
 
-    console.log(proyecto)
     // @ts-ignore
     description.innerText = `Descripción:${proyecto['description']}`
     // @ts-ignore
@@ -32,6 +30,7 @@ export default function Proyecto () {
     // @ts-ignore
     leader.innerText = `Líder de proyecto:${proyecto['leader']}`
   }
+
 
   useEffect(() => {
     if (id) {
@@ -45,11 +44,12 @@ export default function Proyecto () {
     }
   }, [id])
 
-  useEffect(() => {
-    if (!loading)
-      setupData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading])
+    useEffect(() => {
+      if (!loading)
+        setupData()
+    }, [loading])
+
+    
 
   return (
     <div className="flex flex-row">
@@ -74,8 +74,15 @@ export default function Proyecto () {
        <MainButton href= {
         // @ts-ignore 
        `/proyectos/${proyecto['id']}/tareas`} title= "Ver Tareas"/>  
-       <ButtonDeleteProject title="Borrar" projectId={// @ts-ignore
-       proyecto['id']} />    
+
+       <ButtonActionProject title="Borrar" id={
+        // @ts-ignore
+        proyecto['id']} actionType="deleteProject"/>
+        
+       <ButtonActionProject title="Modificar" id={
+        // @ts-ignore
+        proyecto['id']} actionType="modifyProject"/>
+        
     </div> 
     }
     </div>
