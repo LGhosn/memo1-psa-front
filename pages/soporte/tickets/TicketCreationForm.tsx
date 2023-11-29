@@ -1,3 +1,4 @@
+import AlertMessage from "@/components/alertMessage";
 import InputElement from "@/components/inputElement";
 import SelectElement from "@/components/selectElement";
 import { priorityData, severityData, typeOfProblemData } from "@/utils/ticketInfo";
@@ -12,42 +13,31 @@ type PropsForm = {
 
 export default function TicketCreationForm({ title, openForm, setOpenForm }: PropsForm) {
   //let navigate = useNavigate();
-  const [response , setResponse] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [responsables, setResponsables] = useState([])
+  const [cliente , setClientes] = useState([])
+  const [producto, setProductos] = useState([])
+  const [alert, setAlert] = useState(false)
   
   useEffect( () => {
-    setLoading(true)
     fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
         .then(response => response.json())
         .then(data => {
-          setResponse(data);
-          let select = document.getElementById('customers');
-          // @ts-ignore
-          let opts = document.getElementById('customers').length;
-          if (opts < 3) {
+          const clientes = data.map((item: { id: any; rs: any; CUIT: any; }) => ({
+            value: item.id + ";" + item.CUIT,
             // @ts-ignore
-            data?.map(e => {
-              let opt = document.createElement('option');
-              opt.value       = e['id'] + ';' + e['CUIT']
-              opt.innerText   = e['razon social'];
-              // @ts-ignore
-              select.appendChild(opt);
-            });
-          }
+            label: `${item['razon social']}`
+          }));
+          setClientes(clientes)
         })
-        .catch(error => setError(error))
-        .finally(() => setLoading(false))
+        .catch(error =>  console.log(error))
 
-    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+    fetch("https://psa-support-management.onrender.com/products/")
     .then(response => response.json())
     .then(data => {
-      const nuevosResponsables = data.map((item: { legajo: any; Apellido: any; Nombre: any; }) => ({
-        value: item.legajo,
-        label: `${item.Apellido}, ${item.Nombre}`
+      const productos = data.map((item: { id: any; name: any; version: any; }) => ({
+        value: item.id,
+        label: `${item.name} - ${item.version}`
       }));
-      setResponsables(nuevosResponsables)
+      setProductos(productos)
     })
   }, []);
 
@@ -63,7 +53,14 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     let severity = document.getElementById("severity")
     let priority = document.getElementById("priority")
     let typeOfProblem = document.getElementById("typeOfProblem")
-    let r = document.getElementById("responsables")
+    let product = document.getElementById("producto")
+
+    // comprebo que los campos obligatorios esten completos
+    // @ts-ignore
+    if (customers.value === "-1" || title.value === "" || description.value === "" || severity.value === "-1" || priority.value === "-1" || typeOfProblem.value === "-1" || product.value === "-1") {
+      setAlert(true)
+      return
+    }
 
     const data = {
       // @ts-ignore
@@ -84,22 +81,9 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
       "customerCUIT": customers.value.split(';')[1],
       // @ts-ignore
       "customerRS": customers[customers.selectedIndex].text,
-      // // @ts-ignore
-      // "employees": [
-      //   {
-      //     // @ts-ignore
-      //     "name": r[r.selectedIndex].text.split(',')[1].replace(/^\s+|\s+$/g, ''),
-      //     // @ts-ignore
-      //     "lastname": r[r.selectedIndex].text.split(',')[0].replace(/^\s+|\s+$/g, ''),
-      //     "tickets": [
-      //       "prueba"
-      //     ]
-      //   }
-      // ]
-
     }
     // @ts-ignore
-    fetch('https://psa-support-management.onrender.com/tickets/', {
+    fetch(`https://psa-support-management.onrender.com/tickets/?idProduct=${product.value}`, {
       method: 'POST',
       headers: {
         'Accept': '*/*',
@@ -112,7 +96,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
           closeForm()
         })
         // @ts-ignore
-        .catch((error) => setError("No se pudo crear el ticket"))
+        .catch((error) => console.log(error))
   }
 
   return (
@@ -129,23 +113,18 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
                     <div className="mt-2">
-                      <div>
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Cliente</label>
-                        <select id="customers" className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                          { error && <option>Error al obtener clientes..</option>}
-                          { loading && <option>Cargando clientes..</option>}
-                        </select>
-                      </div>
+                      <SelectElement title="Clientes" id="customers" options={cliente} multiple={false}/>
+                      <SelectElement title="Producto" id="producto" options={producto} multiple={false}/>
                       <InputElement title="Título" id="title" type="text" readonly={false}/>
                       <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
                       <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
                       <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
                       <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
-                      <SelectElement title="Responsable" id="responsables" options={responsables} multiple={false}/>
                     </div>
                   </div>
                 </div>
               </div>
+              {alert ? <AlertMessage message="Debe completar todos los campos." onClick={() => setAlert(false)}/>: <></>}
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={closeForm}>Cancel</button>
                 <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={createTicket}>Crear</button>

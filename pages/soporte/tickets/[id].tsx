@@ -167,7 +167,7 @@ export default function Ticket() {
         </div>
       </div>
       <div className="flex flex-row justify-center space-x-10">
-        <MainButton href={"/soporte/tickets"} title="Volver" />
+        <ActionButton onClick={() => router.back()} title="Volver" />
         <ActionButton onClick={() => setNotification(true)} title="Borrar" style="bg-red-400 dark:hover:bg-red-700" />
         <ActionButton title="Guardar" onClick={guardarTicket}/>
       </div>

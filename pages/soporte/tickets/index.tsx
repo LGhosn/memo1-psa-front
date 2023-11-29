@@ -1,5 +1,5 @@
 import HeaderItem from "@/components/headerItem";
-import TaskGridRow from "@/components/ticketGridRow";
+import TicketGridRow from "@/components/ticketGridRow";
 import { SideBar } from "@/components/sideBar";
 import { supportSideBarItems } from "@/utils/routes";
 import { Button } from "@/components/button";
@@ -47,7 +47,7 @@ export default function Tickets() {
                   </thead>
                   <tbody>
                     {list.map((tarea) => (
-                      <TaskGridRow key={tarea['id']} task={tarea} />
+                      <TicketGridRow key={tarea['id']} task={tarea} />
                     ))}
                   </tbody>
                 </table>
