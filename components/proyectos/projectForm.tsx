@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import SuccessfulNotification from "../successfulNotification";
 import { useRouter } from "next/router";
 import ErrorModal from "../errorMessageModal";
+
 type PropsForm = {
   title: string;
   setOpenForm: (value: boolean) => void
@@ -14,12 +15,10 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
   const [modalSuccessful, setModalSuccessful] = useState(false);
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
+
   function closeForm() { setOpenForm(false); }
   function closeErrorMessage() { setErrorMessage('') }
-
-  function reloadPage(){
-    router.reload() 
-  }
+  function reloadPage(){router.reload()}
 
   useEffect( () => {
     setLoading(true)
@@ -103,7 +102,7 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
                   <h3 className="text-xl font-bold leading-6 text-gray-900" id="modal-title">Nuevo proyecto</h3>
                   <div className="mt-2">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Titulo</label>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Nombre</label>
                       <div className="mt-1">
                         <textarea name="name" id="name" className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
