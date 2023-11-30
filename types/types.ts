@@ -10,3 +10,10 @@ export interface Cliente {
   cuit: number
 }
 
+export enum Status {
+  NOT_STARTED = "NO INICIADO",
+  IN_PROGRESS = "EN PROGRESO",
+  COMPLETED = "FINALIZADO",
+  BLOCKED = "BLOQUEADO"
+  
+}
