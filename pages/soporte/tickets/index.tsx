@@ -27,7 +27,7 @@ export default function Tickets() {
         <SideBar items={supportSideBarItems}></SideBar>
         <div className="container max-w-7xl mx-auto mt-8 space-y-50">
           <div className="mb-4">
-            <h1 className="text-3xl font-bold decoration-black">Tickets</h1>
+            <h1 className="text-3xl text-black font-bold decoration-black">Tickets</h1>
           </div>
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:

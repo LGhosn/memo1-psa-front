@@ -10,43 +10,32 @@ import TicketGridRow from "@/components/ticketGridRow";
 import ButtonForCreation from "../ButtonForCreation";
 
 
-export default function Producto() {
+export default function Responsable() {
   const [loading, setLoading] = useState(true)
-  const [ticketsProduct, setTicketsProduct] = useState([])
-  const [product, setProduct] = useState([]) 
+  const [ticketsResponsable, setTicketsResponsable] = useState([])
   const router = useRouter();
-  const { id } = router.query;
+  const { legajo } = router.query;
 
   useEffect(() => {
-    // @ts-ignore
-    if (product && product.name && product.version) {
+    if (ticketsResponsable){
+      // levanto del localStorage el nombre completo
+      const nameCompleto = window.localStorage.getItem("fullName")
       // @ts-ignore
-      setElementInnerHtml("product", product.name + " " + product.version);
-      setLoading(false)
+      setElementInnerHtml("responsable", nameCompleto)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product])
+  }, [ticketsResponsable])
 
   useEffect(() => {
-    if (id) {
-      fetch(`https://psa-support-management.onrender.com/products/${id}`)
+    if (legajo) {
+      console.log(legajo)
+      fetch(`https://psa-support-management.onrender.com/employees/${legajo}/tickets`)
       .then((res) => {
         return res.json()
       }).then((res) => {
-        setProduct(res)
-      })
-
-      fetch(`https://psa-support-management.onrender.com/products/${id}/tickets`)
-      .then((res) => {
-        return res.json()
-      }).then((res) => {
-        console.log(res)
-        setTicketsProduct(res)
-      }).finally(() => {
-        setLoading(false)
-      })
+        setTicketsResponsable(res)
+      }).finally(() => setLoading(false))
     }
-  }, [id])
+  }, [legajo])
 
   return (
     <div className="flex flex-row">
@@ -55,8 +44,8 @@ export default function Producto() {
       {
       loading ? <div className="flex flex-row justify-center"> <Loading /> </div> :
      <>
-      <h1 className="text-4xl mb-5 font-bold text-black text-center p-5" id="product" ></h1>
-      <span className="text-xl font-bold text-black text-left p-3">Tickets del producto:</span>
+      <h1 className="text-4xl mb-5 font-bold text-black text-center p-5" id="responsable" ></h1>
+      <span className="text-xl font-bold text-black text-left p-3">Tickets a cargo:</span>
       <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 p-2">
         <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
           <table className="min-w-full">
@@ -70,16 +59,15 @@ export default function Producto() {
               </tr>
             </thead>
             <tbody>
-              {ticketsProduct.map((tarea) => (
+              {ticketsResponsable.map((tarea) => (
                 <TicketGridRow key={tarea['id']} task={tarea} />
               ))}
             </tbody>
           </table>
         </div>
       </div>
-      <div className="flex flex-row justify-center align-middle space-x-10 p-2">
-        <ButtonForCreation title="Crear ticket" />
-        <MainButton href={"/soporte/productos"} title="Volver" />
+      <div className="flex flex-row justify-center space-x-10 p-2">
+        <MainButton href={"/soporte/responsables"} title="Volver" />
       </div>
       </>
     }

@@ -11,6 +11,10 @@ export const supportRoutes = [
     href: "soporte/tickets",
     title: "Tickets",
   },
+  {
+    href: "soporte/responsables",
+    title: "Responsables",
+  }
 ]
 
 export const mainRoutes = [
@@ -30,12 +34,22 @@ export const supportSideBarItems = [
       href: "/",
   },
   {
-      title: "Productos",
-      href: "/soporte/productos",
-  },
-  {
-      title: "Tickets",
-      href: "/soporte/tickets",
+    title: "Soporte",
+    href: "/soporte",
+    children: [
+      {
+        title: "Productos",
+        href: "/productos",
+      },
+      {
+          title: "Tickets",
+          href: "/tickets",
+      },
+      {
+        title: "Responsables",
+        href: "/responsables"
+      },
+    ]
   },
   {
       title: "Proyectos",

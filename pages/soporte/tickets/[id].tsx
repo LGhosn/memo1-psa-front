@@ -91,23 +91,21 @@ export default function Ticket() {
     const severity = document.getElementById("severity").value
     // @ts-ignore
     const priority = document.getElementById("priority").value
-    // const responsable = {}
-    // for (let i = 0; i < responsablesAsignados.length; i++) {
-    //   // @ts-ignore
-    //   const legajo = responsablesAsignados[i].split(',')[0]
-    //   // @ts-ignore
-    //   const nombre = responsablesAsignados[i].split(',')[1].replace(/^\s+|\s+$/g, '')
-    //   // @ts-ignore
-    //   const apellido = responsablesAsignados[i].split(',')[2]
-    //   // @ts-ignore
-    //   responsable[i] = {
-    //     "legajo": legajo,
-    //     "name": nombre,
-    //     "lastname": apellido,
-    //     "tickets": []
-    //   }
-    // }
-
+    const responsable = {}
+    for (let i = 0; i < responsablesAsignados.length; i++) {
+      // @ts-ignore
+      const legajo = responsablesAsignados[i].split(',')[0]
+      // @ts-ignore
+      const nombre = responsablesAsignados[i].split(',')[1].replace(/^\s+|\s+$/g, '')
+      // @ts-ignore
+      const apellido = responsablesAsignados[i].split(',')[2]
+      // @ts-ignore
+      responsable[i] = {
+        "legajo": legajo,
+        "firstName": nombre,
+        "lastname": apellido
+      }
+    }
 
     fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateFields?newState=${state}&newSeverity=${severity}&newPriority=${priority}`, {
       method: 'PATCH',
@@ -115,19 +113,18 @@ export default function Ticket() {
         'accept': '*/*',
         'Content-Type': 'application/json'
       },
-    }).then((res) => {
-      router.reload()
     })
 
-    // fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateResponsible?NewResponsible=${responsable}`, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     'accept': '*/*',
-    //     'Content-Type': 'application/json'
-    //   },
-    // }).then((res) => {
-    //   router.reload()
-    // })
+    fetch(`https://psa-support-management.onrender.com/tickets/${id}/assignResponsible`, {
+      method: 'PUT',
+      headers: {
+        'accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(responsable)
+    }).then((res) => {
+      // router.reload()
+    })
   }
 
   // @ts-ignore
@@ -136,7 +133,6 @@ export default function Ticket() {
     const opcionesSeleccionadas = Array.from(event.target.selectedOptions, (option) => option.value + ','+ option.text);
     // @ts-ignore
     setResponsablesAsignados(opcionesSeleccionadas);
-    console.log(opcionesSeleccionadas)
   }
   return (
     <div className="flex flex-row">
