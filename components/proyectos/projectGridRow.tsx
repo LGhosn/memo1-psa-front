@@ -9,7 +9,7 @@ export default function ProjectGridRow({ project }: {project: any}) {
     const status =  Status[project ['status']]
 
     function openProject() {
-        router.push(`/proyectos/${project['name']}`)
+        router.push(`/proyectos/${project['id']}`)
     }
     
   return (

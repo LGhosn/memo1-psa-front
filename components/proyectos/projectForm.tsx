@@ -20,9 +20,20 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
   function closeErrorMessage() { setErrorMessage('') }
   function reloadPage(){router.reload()}
 
+  const [inputEmpty, setInputEmpty] = useState(true);
+
+  const handleInputChange = (event:any) => {
+     if (event.target.value.trim() === '') {
+       setInputEmpty(true);
+     } else {
+       setInputEmpty(false);
+     }
+   }
+
+
   useEffect( () => {
     setLoading(true)
-    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+    fetch(`https://psa-support-management.onrender.com/employees/`)
         .then(response => response.json())
         .then(data => {
           setResponse(data);
@@ -34,7 +45,7 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
             data?.map(e => {
               let opt = document.createElement('option');
               opt.value       = e['legajo'];
-              opt.innerText   = e['Apellido'] + ' ' + e['Nombre'];
+              opt.innerText   = e['lastName'] + ' ' + e['firstName'];
               // @ts-ignore
               select.appendChild(opt);
             });
@@ -104,7 +115,7 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Nombre</label>
                       <div className="mt-1">
-                        <textarea name="name" id="name" className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea name="name"  id="name" className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
                     <div>
@@ -160,3 +171,7 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
       </>
   )
 }
+
+/* <button type="submit" onClick={createProject} disabled={inputEmpty} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                   Crear proyecto
+                </button>*/
