@@ -67,7 +67,7 @@ export default function Tareas() {
                         list.length === 0 ? (
                         <tr>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                No hay proyectos creados.
+                                No hay tareas creadas.
                             </td>
                         </tr>
                             ) :
