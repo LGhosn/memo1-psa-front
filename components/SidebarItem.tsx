@@ -12,7 +12,7 @@ const SideBarItem = ({ href, title, children }: ISidebarItem) => {
       <li className="m-2">
         <button
           type="button"
-          className="flex items-center w-full p-2 text-grey-200 transition duration-75 rounded-lg group hover:bg-amber-100 dark:text-white dark:hover:bg-amber-700"
+          className="flex items-center w-full p-2 text-grey-200 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-amber-700"
           aria-controls={`dropdown-${title}`}
           data-collapse-toggle={`dropdown-${title}`}
           onClick={() => setOpen(!open)}
@@ -52,7 +52,7 @@ const SideBarItem = ({ href, title, children }: ISidebarItem) => {
     <li className="m-2" key={title}>
       <Link href={href}>
         <div
-          className={`flex items-center w-full p-2 transition duration-75 rounded-lg group hover:bg-amber-100 dark:text-white dark:hover:bg-amber-700`}
+          className={`flex items-center w-full p-2 transition duration-75 rounded-lg group hover:bg-blue-100 dark:text-white dark:hover:bg-amber-700`}
         >
           <span className={`flex-1 ml-2 text-left whitespace-nowrap ${router.asPath === href && "font-bold"}`}>
             {title}

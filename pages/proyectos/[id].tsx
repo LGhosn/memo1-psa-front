@@ -58,49 +58,49 @@ export default function Proyecto () {
     <div className="flex flex-row">
     <SideBar items={projectSideBarItems}></SideBar>
     
-    <div className="container max-w-2xl	mx-auto ">
+    <div className="flex flex-col container max-w-2xl	mx-auto ">
       {
     loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
     <>
     
         {/* puede ser esto lo que lo haga tan grande */}
-     <div className="conteiner mt-3 border-4 border-gray-500 w-full h-11/12" >
+     <div className="conteiner mt-3 border-4 border-gray-500 w-full flex flex-col" >
      
        <h1 className="text-5xl mb-5 font-bold" style={{textAlign:'center', marginTop:"20px"}}>{id}</h1>
         
         <div className="ml-10 mt-3 flex flex-row">
-          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Fecha de inicio:</h2>
+          <h2 className="font-bold" style={{fontSize: '1.3rem'}}>Fecha de inicio:</h2>
           <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="creationDate"></div>
         </div>
         
-        <div className="ml-10 flex flex-row mt-3">
-          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Horas estimadas:</h2>
+        <div className="ml-10 flex flex-row mt-5">
+          <h2 className="font-bold" style={{fontSize: '1.3rem'}}>Horas estimadas:</h2>
           <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="totalHours"></div>
           <div className=" mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}}>hrs</div>
         </div>
 
-        <div className="ml-10 flex flex-row mt-3">
-          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Estado del proyecto:</h2>
+        <div className="ml-10 flex flex-row mt-5">
+          <h2 className="font-bold" style={{fontSize: '1.3rem'}}>Estado del proyecto:</h2>
           <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="status"></div>
         </div>
 
-        <div className="ml-10 flex flex-row mt-3">
-          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Líder del proyecto:</h2>
+        <div className="ml-10 flex flex-row mt-5">
+          <h2 className="font-bold" style={{fontSize: '1.3rem'}}>Líder del proyecto:</h2>
           <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="leader"></div>
         </div>
        
-        <div className="ml-10 mt-10">
-          <h2 className="font-bold" style={{fontSize: '1.4rem'}}>Descripción:</h2>
-          <div className="border border-black rounded-2xl" style={{width:400, height:100}}>
+        <div className="ml-10 mt-5">
+          <h2 className="font-bold" style={{fontSize: '1.3rem'}}>Descripción:</h2>
+          <div className="shadow-sm p-1 block sm:text-sm border border-gray-500 rounded-md text-gray-900" style={{width:400, height:100}}>
             <div className="ml-2 mt-1 flex items-center text-gray-900" style={{fontSize: '1.2rem'}} id="description"></div>
           </div>
         </div>
-        <ViewTask href= {
+        <ViewTask title="VER TAREAS" href= {
         // @ts-ignore 
        `/proyectos/${proyecto['id']}/tareas`}/> 
     </div> 
-
-    <div className="mt-1 flex flex-row space justify-between">
+          
+    <div className="mt-1 flex flex-row  justify-between">
         <div>
           <ButtonActionProject title="Borrar" id={
           // @ts-ignore
