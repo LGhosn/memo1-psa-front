@@ -17,7 +17,7 @@ export default function ButtonForCreation( {title }: Props) {
       <>
         <button onClick={openForm}>
           <div
-              className={`m-2 flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-400 hover:bg-amber-100 dark:text-white dark:hover:bg-blue-700`}
+              className={`flex items-center m-2 p-2 transition duration-75 rounded-lg bg-blue-400 hover:bg-amber-100 dark:text-white dark:hover:bg-blue-700`}
           >
           <span className={`flex-1 ml-2 whitespace-nowrap text-center font-bold`}>
             {title}
