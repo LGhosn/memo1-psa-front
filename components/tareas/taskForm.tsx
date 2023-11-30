@@ -25,7 +25,7 @@ export function TaskCreationForm({ title,projectId, setOpenForm }: PropsForm) {
 
   useEffect( () => {
     setLoading(true)
-    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+    fetch('https://psa-support-management.onrender.com/employees/')
         .then(response => response.json())
         .then(data => {
           setResponse(data);
@@ -37,7 +37,7 @@ export function TaskCreationForm({ title,projectId, setOpenForm }: PropsForm) {
             data?.map(e => {
               let opt = document.createElement('option');
               opt.value       = e['legajo'];
-              opt.innerText   = e['Apellido'] + ' ' + e['Nombre'];
+              opt.innerText   = e['lastName'] + ' ' + e['firstName'];
               // @ts-ignore
               select.appendChild(opt);
             });

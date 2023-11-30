@@ -57,9 +57,10 @@ export default function Tareas() {
                 <table className="min-w-full">
                   <thead>
                     <tr>
+                        <HeaderItem title="ID" />
                         <HeaderItem title="Nombre" />
                         <HeaderItem title="Estado" />
-                        <HeaderItem title="ID" />
+                        
                     </tr>
                   </thead>
                   <tbody>

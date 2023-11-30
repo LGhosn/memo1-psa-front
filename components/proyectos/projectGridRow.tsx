@@ -14,6 +14,9 @@ export default function ProjectGridRow({ project }: {project: any}) {
     
   return (
       <tr key={`/proyectos/${project['name']}`} onClick={openProject} className="dark:hover:bg-gray-300 cursor-pointer hover:bg-gray-100 ">
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`id${project['Nombre']}`}>
+            <div className="flex items-center text-gray-900">{project['id']}</div>
+        </td>
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 " key={`nom${project['Nombre']}`}>
             <div className="flex items-center text-gray-900">{project['name']}</div>
         </td>
@@ -21,9 +24,7 @@ export default function ProjectGridRow({ project }: {project: any}) {
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${project['Nombre']}`}>
             <div className="flex items-center text-gray-900">{status}</div>
         </td>
-        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`id${project['Nombre']}`}>
-            <div className="flex items-center text-gray-900">{project['id']}</div>
-        </td>
+        
       </tr>
   )
 }
