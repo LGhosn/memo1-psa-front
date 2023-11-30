@@ -4,6 +4,7 @@ import { projectSideBarItems } from "@/utils/routes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ButtonActionTask } from "@/components/tareas/buttonActionTask";
+import { Status } from "@/types/types";
 
 export default function Tarea() {
   const [loading, setLoading] = useState(true)
@@ -14,33 +15,18 @@ export default function Tarea() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function setupData() {
-    let statusText = ''
-    //let name = document.getElementById("name")
+
     let description = document.getElementById("description")
     let status = document.getElementById("status")
     let creationDate = document.getElementById("creationDate")
     let assignedTo = document.getElementById("assignedTo")
-
-    // @ts-ignore
-    if (task['status'] === "NOT_STARTED") {
-      statusText = "INICIADO"
-      // @ts-ignore
-     } else if (task['status'] === "IN_PROGRESS") {
-      statusText = "EN PROGRESO"
-      // @ts-ignore
-     } else if (task['status'] === "COMPLETED") {
-      statusText = "COMPLETADO"
-      // @ts-ignore
-     } else if (task['status'] === "BLOCKED") {
-      statusText = "BLOQUEADO"
-     }
 
      // @ts-ignore
     let creationDateArray: string[] = (task['creationDate']).split('T');
     // @ts-ignore
      description.innerText = `${task['description']}`
     // @ts-ignore
-    status.innerText = `${statusText}`
+    status.innerText = `${Status[task ['status']]}`
     // @ts-ignore
     creationDate.innerText = `${(creationDateArray[0]).split('-').reverse().join("/")}`
     // @ts-ignore
@@ -69,7 +55,7 @@ export default function Tarea() {
   return ( 
     <div className="flex flex-row">
       <SideBar items={projectSideBarItems}></SideBar>
-      <div className="container max-w-4xl	mx-auto">
+      <div className="container flex flex-col max-w-7xl mx-10 space-y-50">
         {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>: <>
             <div className="container space-y-50 border-4 mt-8 mx-auto border-gray-500" style={{height: "83%"}}>
@@ -95,10 +81,10 @@ export default function Tarea() {
               </div>              
             </div>
             <div className="mt-1 flex flex-row space justify-between content-end">
-              <ButtonActionTask title="Borrar" taskId={id} actionType="deleteTask" projectId={
+              <ButtonActionTask style={' bg-red-400 hover:bg-red-600 '} title="Borrar" taskId={id} actionType="deleteTask" projectId={
               // @ts-ignore 
               task['projectId']} />
-              <ButtonActionTask title="Modificar" taskId={id} actionType="modifyTask" projectId={
+              <ButtonActionTask style={' bg-blue-200 hover:bg-blue-600 '} title="Modificar" taskId={id} actionType="modifyTask" projectId={
               // @ts-ignore 
               task['projectId']} />
             </div>

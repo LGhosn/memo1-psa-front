@@ -9,9 +9,10 @@ type Props = {
  taskId: string | any;
  projectId: string | any;
  actionType: string ;
+ style: any;
 };
 
-export const ButtonActionTask = ( {title, taskId, projectId, actionType}: Props) => {
+export const ButtonActionTask = ( {title, taskId, projectId, actionType, style}: Props) => {
  const [open, setOpen] = useState(false);
  let urlTaskStatus =`https://psa-project-managment.onrender.com/api/v1/tasks/task/${taskId}/status/`;
  let urlBackPage =`/proyectos/${projectId}/tareas`
@@ -42,9 +43,9 @@ export const ButtonActionTask = ( {title, taskId, projectId, actionType}: Props)
 
  return (
       <>
-        <button onClick={openForm}>
+        <button onClick={openForm} className={`${style} focus:ring-2 focus:outline-none focus:ring-blue-300`}>
           <div
-              className={`flex items-center w-full p-2 transition duration-75 rounded-lg group bg-blue-400 hover:bg-blue-100 dark:text-white dark:hover:bg-blue-700`}
+              className={`flex items-center w-full p-2 transition duration-75 rounded-lg-xl group  dark:text-white`}
           >
           <span className={`flex-1 ml-2 text-left whitespace-nowrap "font-bold"`}>
             {title}

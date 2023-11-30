@@ -67,7 +67,7 @@ export default function Tareas() {
               </div>
             </div>
           </div>
-          <ButtonActionTask title="Crear tarea" projectId={projectId} actionType="createTask" taskId=''/>
+          <ButtonActionTask style={' bg-blue-200 hover:bg-blue-600 '} title="Crear tarea" projectId={projectId} actionType="createTask" taskId=''/>
           </>
           }
         </div>
