@@ -19,6 +19,7 @@ export default function Tarea() {
   
   function setupData() {
 
+    let name = document.getElementById("name")
     let description = document.getElementById("description")
     let status = document.getElementById("status")
     let creationDate = document.getElementById("creationDate")
@@ -27,6 +28,8 @@ export default function Tarea() {
 
      // @ts-ignore
     let creationDateArray: string[] = (task['creationDate']).split('T');
+    // @ts-ignore
+    name.innerText = `${task['name']}`
     // @ts-ignore
      description.innerText = `${task['description']}`
     // @ts-ignore
@@ -70,7 +73,7 @@ export default function Tarea() {
         {/* puede ser esto lo que lo haga tan grande */}
      <div className="flex flex-col border-4 border-gray-500 w-full h-11/12 mt-5" >
      
-       <h1 className="text-4xl mb-5 font-bold" style={{textAlign:'center', marginTop:"20px"}}>{id}</h1>
+       <h1 className="text-4xl mb-5 font-bold" id="name" style={{textAlign:'center', marginTop:"20px"}}></h1>
         
        <div className="ml-10 flex flex-row mt-5">
           <h2 className="font-bold" style={{fontSize: '1.1rem'}}>Id de proyecto asociado:</h2>
