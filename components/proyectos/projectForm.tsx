@@ -16,20 +16,29 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [totalHours, setTotalHours] = useState("");
+  const [isValid, setValid] = useState(false);
+  
+  const validate = () => {
+    return (
+        name.length > 0 &&
+        description.length > 0 &&
+        totalHours.length > 0 
+    );
+  };
+
   function closeForm() { setOpenForm(false); }
   function closeErrorMessage() { setErrorMessage('') }
   function reloadPage(){router.reload()}
+  
+  useEffect(() => {
+    const isValid:any = validate();
+    setValid(isValid);
+  }, [name, description,totalHours]);
 
-  const [inputEmpty, setInputEmpty] = useState(true);
-
-  const handleInputChange = (event:any) => {
-     if (event.target.value.trim() === '') {
-       setInputEmpty(true);
-     } else {
-       setInputEmpty(false);
-     }
-   }
-
+  
 
   useEffect( () => {
     setLoading(true)
@@ -57,20 +66,17 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
 
 
   function createProject() {
-    let name = document.getElementById("name")
-    let description = document.getElementById("description")
     let leader = document.getElementById("leader")
-    let totalHours = document.getElementById("totalHours")
 
     const data = {
       // @ts-ignore
-      "name": name.value,
+      "name": name,
       // @ts-ignore
-      "description": description.value,
+      "description": description,
       // @ts-ignore
       "leader": leader[leader.selectedIndex].text,
       // @ts-ignore
-      "totalHours": totalHours.value
+      "totalHours": totalHours
     }
 
     fetch('https://psa-project-managment.onrender.com/api/v1/projects', {
@@ -115,13 +121,14 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Nombre</label>
                       <div className="mt-1">
-                        <textarea name="name"  id="name" className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea value={name} onChange={(e) => setName(e.target.value)}  className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
+                    
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Descripción</label>
                       <div className="mt-1">
-                        <textarea name="description" id="description" className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea  value={description} onChange={(e) => setDescription(e.target.value)} className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
 
@@ -137,18 +144,18 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Horas estimadas</label>
                       <div className="mt-1">
-                        <textarea name="totalHours" id="totalHours" className="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea value={totalHours} onChange={(e) => setTotalHours(e.target.value)} className="shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
-
                     <div className="p-4 md:p-5 text-center">
                 
-                <button type="button" onClick={createProject} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                   Crear proyecto
-                </button>
-                <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                  Cancelar</button>
-            </div>
+                      <button type="button" disabled={!isValid} onClick={createProject} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                        Crear proyecto
+                      </button>
+                      <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                        Cancelar
+                      </button>
+                    </div>
 
                   </div>
                 </div>
@@ -172,6 +179,3 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
   )
 }
 
-/* <button type="submit" onClick={createProject} disabled={inputEmpty} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                   Crear proyecto
-                </button>*/
