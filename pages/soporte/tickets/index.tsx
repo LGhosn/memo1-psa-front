@@ -38,7 +38,9 @@ export default function Tickets() {
                 <table className="min-w-full">
                   <thead>
                     <tr>
+                      <HeaderItem title="Id" />
                       <HeaderItem title="Titulo" />
+                      <HeaderItem title="Fecha Creación" />
                       <HeaderItem title="Severidad" />
                       <HeaderItem title="Prioridad" />
                       <HeaderItem title="Estado" />

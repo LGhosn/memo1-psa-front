@@ -9,8 +9,16 @@ export default function TicketGridRow({ task }: {task: any}) {
 
   return (
       <tr key={`${task['id']}`} onClick={openTicket} className="dark:hover:bg-gray-300 cursor-pointer">
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`id${task['id']}`}>
+            <div className="flex items-center text-gray-900">{task['id']}</div>
+        </td>
+        
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`title${task['id']}`}>
             <div className="flex items-center text-gray-900">{task['title']}</div>
+        </td>
+        
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`creationDate${task['id']}`}>
+            <div className="flex items-center text-gray-900">{task['creationDate']}</div>
         </td>
 
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`severity${task['id']}`}>

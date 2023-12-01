@@ -8,6 +8,7 @@ import { priorityData, severityData, stateData } from "@/utils/ticketInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { setElementInnerHtml, setElementValue, setSelectValue } from "@/utils/utils";
+import { ButtonActionTaskTicket } from "@/components/soporte/buttonActionTT";
 
 export default function Ticket() {
   const [loading, setLoading] = useState(true)
@@ -191,6 +192,9 @@ export default function Ticket() {
       </div>
       <div className="flex flex-row justify-center space-x-10">
         <ActionButton onClick={() => router.back()} title="Volver" />
+        {/* <ButtonActionTaskTicket title="Crear Tarea" ticketId={id} /> */}
+        {/*@ts-ignore*/}
+        <ActionButton onClick={() => router.push(`/soporte/tareas?ticketId=${id}&ticketName=${ticket.title}`)} title="Tareas" />
         <ActionButton title="Guardar" onClick={guardarTicket}/>
       </div>
       </>
