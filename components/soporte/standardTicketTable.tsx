@@ -23,9 +23,16 @@ export default function StandardTicketTable( { list }: Props) {
             </tr>
           </thead>
           <tbody>
-            {list.map((tarea) => (
-              <TicketGridRow key={tarea['id']} task={tarea} />
-            ))}
+            {list.length == 0 ? 
+              <tr className="dark:hover:bg-gray-300 cursor-pointer">
+                <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                    <div className="flex items-center text-gray-900">No hay tickets para mostrar </div>
+                </td>
+              </tr> :
+              list.map((tarea) => (
+                <TicketGridRow key={tarea['id']} task={tarea} />
+              ))
+            }
           </tbody>
         </table>
       </div>
