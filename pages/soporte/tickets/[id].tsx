@@ -7,7 +7,7 @@ import { supportSideBarItems } from "@/utils/routes";
 import { priorityData, severityData, stateData } from "@/utils/ticketInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { setElementInnerHtml, setElementValue, setSelectValue } from "@/utils/utils";
+import { setElementInnerHtml, setElementValue, setFormatDate, setSelectValue } from "@/utils/utils";
 import { ButtonActionTaskTicket } from "@/components/soporte/buttonActionTT";
 
 export default function Ticket() {
@@ -38,7 +38,7 @@ export default function Ticket() {
     // @ts-ignore
     setElementValue("customerCUIT", ticket.customerCUIT);
     // @ts-ignore
-    setElementValue("creationDate", ticket.creationDate);
+    setElementValue("creationDate", setFormatDate(ticket.creationDate));
   }
 
   function setupResponsables(){
@@ -166,40 +166,42 @@ export default function Ticket() {
     setResponsablesAsignados(opcionesSeleccionadas);
   }
   return (
-    <div className="flex flex-row">
-    <SideBar items={supportSideBarItems}></SideBar>
-    <div className="container max-w-2xl mx-auto mt-8">
-      {
-      loading ? <div className="flex flex-row justify-center"> <Loading /> </div> :
-     <>
-      <div className="flex flex-col border-4 border-gray-500 w-full h-11/12 p-9 mt-20 mb-10">
-        <h1 className="text-4xl mb-5 font-bold text-black text-center" id="title" ></h1>
-        <div className="flex flex-row space-x-10">
-        <div className="pr-2">
-          <SelectElement title="Estado" id="state" options={stateData} multiple={false}/>
-          <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
-          <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
-          <SelectElement title="Responsable" id="responsables" options={empleados} multiple onChange={handleSelectChange}/>
-        </div>
-        <div>
-          <InputElement title="Tipo de problema" id="typeOfProblem" type="text" readonly/>
-          <InputElement title="Razón Social Cliente" id="customerRS" type="text" readonly/>
-          <InputElement title="CUIT Cliente" id="customerCUIT" type="text" readonly/>
-          <InputElement title="Fecha de creación" id="creationDate" type="text" readonly/>
-          <InputElement title="Descripción" id="description" type="textarea" readonly/>
-        </div>
-        </div>
+<div className="flex flex-row">
+      <SideBar items={supportSideBarItems} />
+      <div className="container mx-auto mt-8 p-4">
+        {loading ? (
+          <div className="flex justify-center">
+            <Loading />
+          </div>
+        ) : (
+          <>
+            <div className="bg-white shadow-lg rounded-lg overflow-hidden p-6 mb-8">
+              <h1 className="text-3xl font-bold mb-4 text-center text-black" id="title"></h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <SelectElement title="Estado" id="state" options={stateData} multiple={false} />
+                  <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false} />
+                  <SelectElement title="Severidad" id="severity" options={severityData} multiple={false} />
+                  <SelectElement title="Responsable" id="responsables" options={empleados} multiple onChange={handleSelectChange} />
+                </div>
+                <div>
+                  <InputElement title="Tipo de problema" id="typeOfProblem" type="text" readonly />
+                  <InputElement title="CUIT Cliente" id="customerCUIT" type="text" readonly />
+                  <InputElement title="Razón Social Cliente" id="customerRS" type="text" readonly />
+                  <InputElement title="Fecha de creación" id="creationDate" type="text" readonly />
+                  <InputElement title="Descripción" id="description" type="textarea" readonly />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center space-x-4">
+              <ActionButton onClick={() => router.back()} title="Volver" />
+              {/* @ts-ignore */}
+              <ActionButton onClick={() => router.push(`/soporte/tareas?ticketId=${id}&ticketName=${ticket.title}`)} title="Tareas" />
+              <ActionButton title="Guardar" onClick={guardarTicket} />
+            </div>
+          </>
+        )}
       </div>
-      <div className="flex flex-row justify-center space-x-10">
-        <ActionButton onClick={() => router.back()} title="Volver" />
-        {/* <ButtonActionTaskTicket title="Crear Tarea" ticketId={id} /> */}
-        {/*@ts-ignore*/}
-        <ActionButton onClick={() => router.push(`/soporte/tareas?ticketId=${id}&ticketName=${ticket.title}`)} title="Tareas" />
-        <ActionButton title="Guardar" onClick={guardarTicket}/>
-      </div>
-      </>
-    }
     </div>
-   </div>
   )
 }

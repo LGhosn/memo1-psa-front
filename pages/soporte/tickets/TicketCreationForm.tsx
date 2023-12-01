@@ -1,6 +1,7 @@
 import AlertMessage from "@/components/alertMessage";
 import InputElement from "@/components/inputElement";
 import SelectElement from "@/components/selectElement";
+import SuccessfulNotification from "@/components/successfulNotification";
 import { priorityData, severityData, typeOfProblemData } from "@/utils/ticketInfo";
 import {useEffect, useState} from "react";
 //import {useNavigate} from "react-router-dom";
@@ -16,6 +17,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
   const [cliente , setClientes] = useState([])
   const [producto, setProductos] = useState([])
   const [alert, setAlert] = useState(false)
+  const [modalSuccessful, setModalSuccessful] = useState(false)
   
   useEffect( () => {
     fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
@@ -92,14 +94,14 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
       body: JSON.stringify(data)
     })
         .then((res) => res.json())
-        .then((data) => {
-          closeForm()
-        })
         // @ts-ignore
         .catch((error) => console.log(error))
+    
+    setModalSuccessful(true)
   }
 
   return (
+    <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -107,19 +109,19 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 
-            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div className=" rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-fit sm:max-w-lg">
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
                     <div className="mt-2">
+                      <InputElement title="Título" id="title" type="text" readonly={false}/>
                       <SelectElement title="Clientes" id="customers" options={cliente} multiple={false}/>
                       <SelectElement title="Producto" id="producto" options={producto} multiple={false}/>
-                      <InputElement title="Título" id="title" type="text" readonly={false}/>
-                      <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
                       <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
                       <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
                       <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
+                      <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
                     </div>
                   </div>
                 </div>
@@ -133,5 +135,9 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
           </div>
         </div>
       </div>
+      {modalSuccessful && (
+        <SuccessfulNotification titleAction="guardado" actionPage={closeForm}/>
+      )}  
+      </>
   )
 }

@@ -6,6 +6,7 @@ import { Button } from "@/components/button";
 import { useEffect, useState } from "react";
 import Loading from "@/components/loading";
 import ButtonForCreation from "@/pages/soporte/ButtonForCreation";
+import StandardTicketTable from "@/components/soporte/standardTicketTable";
 
 export default function Tickets() {
   const [list, setList] = useState([])
@@ -32,30 +33,10 @@ export default function Tickets() {
           {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
           <>
-          <div className="flex flex-col">
-            <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-                <table className="min-w-full">
-                  <thead>
-                    <tr>
-                      <HeaderItem title="Id" />
-                      <HeaderItem title="Titulo" />
-                      <HeaderItem title="Fecha Creación" />
-                      <HeaderItem title="Severidad" />
-                      <HeaderItem title="Prioridad" />
-                      <HeaderItem title="Estado" />
-                      <HeaderItem title="Tipo" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {list.map((tarea) => (
-                      <TicketGridRow key={tarea['id']} task={tarea} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div><ButtonForCreation title="Crear ticket" />
+          <StandardTicketTable list={list} />
+          <div className="p-2">
+            <ButtonForCreation title="Crear ticket" />
+          </div>
           </>
           }
         </div>

@@ -35,7 +35,6 @@ export default function Responsables() {
                       <table className="min-w-full">
                           <thead>
                           <tr>
-                              <HeaderItem title="Id" />
                               <HeaderItem title="Legajo" />
                               <HeaderItem title="Nombre" />
                               <HeaderItem title="Apellido" />

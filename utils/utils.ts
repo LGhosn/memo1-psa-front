@@ -22,3 +22,12 @@ export const setSelectValue = (selectId: string, value: any) => {
     }
   }
 }
+
+export function setFormatDate(date: string) {
+  if (date) {
+      const dateSplitted = date.split("-")
+      return `${dateSplitted[2].substring(0, 2)}/${dateSplitted[1]}/${dateSplitted[0]}`
+  } else {
+      return "Sin fecha"
+  }
+}
