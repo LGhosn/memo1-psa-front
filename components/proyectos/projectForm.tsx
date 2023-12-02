@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 import ErrorModal from "../errorMessageModal";
 
 type PropsForm = {
-  title: string;
   setOpenForm: (value: boolean) => void
 };
 
-export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
+export function ProjectCreationForm({setOpenForm }: PropsForm) {
   const [response , setResponse] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -22,23 +21,23 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
   const [isValid, setValid] = useState(false);
   
   const validate = () => {
+    const regex = /^\d+$/; // Expresión regular que solo permite números enteros positivos
     return (
         name.length > 0 &&
         description.length > 0 &&
         totalHours.length > 0 
+        // regex.test(totalHours) // Comprueba si totalHours es un número válido
     );
   };
 
-  function closeForm() { setOpenForm(false); }
-  function closeErrorMessage() { setErrorMessage('') }
-  function reloadPage(){router.reload()}
-  
   useEffect(() => {
     const isValid:any = validate();
     setValid(isValid);
   }, [name, description,totalHours]);
 
-  
+  function closeForm() { setOpenForm(false); }
+  function closeErrorMessage() { setErrorMessage('') }
+  function reloadPage(){router.reload()}
 
   useEffect( () => {
     setLoading(true)
@@ -97,7 +96,6 @@ export function ProjectCreationForm({ title, setOpenForm }: PropsForm) {
         })
         // @ts-ignore
         .catch((error) => {
-          console.error('Error:', error);
           setErrorMessage('No se pudo crear el proyecto.');
          })
   }

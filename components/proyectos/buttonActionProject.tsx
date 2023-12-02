@@ -1,21 +1,24 @@
 import React from 'react';
 import { useState } from "react";
 import { ModalDelete } from '../modalDelete';
-import { ModifyStatus } from '../modifyStatus';
+import { ModifyStatus } from './modifyProject';
 import { ProjectCreationForm } from './projectForm';
 
 type Props = {
- title: string;
+ proyecto?: any;
  id: string | any;
  actionType: string ;
  style: any;
+ icon?:any;
+ title?: string;
 };
 
-export const ButtonActionProject = ( {title, id, actionType, style}: Props) => {
+export const ButtonActionProject = ( {title,proyecto, id, actionType, style, icon}: Props) => {
  const [open, setOpen] = useState(false);
  let urlBackPage =`/proyectos`
  let urlProject=`https://psa-project-managment.onrender.com/api/v1/projects/project/${id}`
  let urlProjectStatus=`https://psa-project-managment.onrender.com/api/v1/projects/project/${id}/status/`
+ 
 
  const openForm = () => {
     setOpen(!open);
@@ -29,11 +32,11 @@ export const ButtonActionProject = ( {title, id, actionType, style}: Props) => {
         ); 
       case 'modifyProject':
         return (
-          <ModifyStatus setOpenStatus={setOpen} title='proyecto' url= {urlProjectStatus} />
+          <ModifyStatus elemento={proyecto} setOpenStatus={setOpen} title='proyecto' url= {urlProjectStatus} />
         ); 
       case 'createProject':
         return (
-          <ProjectCreationForm setOpenForm={setOpen} title={title}/>
+          <ProjectCreationForm setOpenForm={setOpen}/>
         ); 
       default:
         return null;
@@ -42,9 +45,10 @@ export const ButtonActionProject = ( {title, id, actionType, style}: Props) => {
 
  return (
       <>
-        <button onClick={openForm} className={`${style} focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center`}>
+        <button onClick={openForm} className={`${style} justify-center focus:ring-2 focus:outline-none  dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center`}>
           <span
-          className={`flex-1 ml-2 text-left whitespace-nowrap font-bold text-black`}>
+          className={`flex-1 ml-2 text-left whitespace-nowrap font-bold text-black justify-center`}>
+              {icon}
               {title}
           </span>
         </button>

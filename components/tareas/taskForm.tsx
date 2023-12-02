@@ -4,12 +4,11 @@ import { useRouter } from "next/router";
 import ErrorModal from "../errorMessageModal";
 
 type PropsForm = {
-  title: string;
   projectId: string;
   setOpenForm: (value: boolean) => void
 };
 
-export function TaskCreationForm({ title,projectId, setOpenForm }: PropsForm) {
+export function TaskCreationForm({projectId, setOpenForm }: PropsForm) {
   const [response , setResponse] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)

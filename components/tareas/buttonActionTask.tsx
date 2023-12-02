@@ -1,18 +1,20 @@
 import React from 'react';
 import { useState } from "react";
 import { ModalDelete } from '../modalDelete';
-import { ModifyStatus } from '../modifyStatus';
+import { ModifyTask } from './modifyTask';
 import { TaskCreationForm } from './taskForm';
 
 type Props = {
- title: string;
+ title?: string;
  taskId: string | any;
  projectId: string | any;
  actionType: string ;
  style: any;
+ icon?: any;
+ task?: any;
 };
 
-export const ButtonActionTask = ( {title, taskId, projectId, actionType, style}: Props) => {
+export const ButtonActionTask = ( {title, taskId, projectId, actionType, style, icon, task}: Props) => {
  const [open, setOpen] = useState(false);
  let urlTaskStatus =`https://psa-project-managment.onrender.com/api/v1/tasks/task/${taskId}/status/`;
  let urlBackPage =`/proyectos/${projectId}/tareas`
@@ -30,11 +32,11 @@ export const ButtonActionTask = ( {title, taskId, projectId, actionType, style}:
       case 'modifyTask':
         return (
           
-          <ModifyStatus setOpenStatus={setOpen} title='tarea' url= {urlTaskStatus} />
+          <ModifyTask task={task} setOpenStatus={setOpen} title='tarea' url= {urlTaskStatus} />
         );
       case 'createTask':
           return (
-            <TaskCreationForm  setOpenForm={setOpen} title={title} projectId={projectId} />
+            <TaskCreationForm  setOpenForm={setOpen} projectId={projectId} />
           );
       default:
         return null;
@@ -43,9 +45,11 @@ export const ButtonActionTask = ( {title, taskId, projectId, actionType, style}:
 
  return (
       <>
-        <button onClick={openForm} className={`${style} focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center`}>
-          <span className={`flex-1 flex flex-row ml-2 text-left whitespace-nowrap font-bold text-black`}>
-            {title}
+        <button onClick={openForm} className={`${style} justify-center focus:ring-2 focus:outline-none  dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center`}>
+          <span
+          className={`flex-1 ml-2 text-left whitespace-nowrap font-bold text-black justify-center`}>
+              {icon}
+              {title}
           </span>
         </button>
         {open && getActionComponent()}

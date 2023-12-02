@@ -15,5 +15,12 @@ export enum Status {
   IN_PROGRESS = "EN PROGRESO",
   COMPLETED = "FINALIZADO",
   BLOCKED = "BLOQUEADO"
-  
+}
+
+
+export enum StatusPath {
+  NOT_STARTED = "notStarted",
+  IN_PROGRESS = "inProgress",
+  COMPLETED = "completed",
+  BLOCKED = "blocked"
 }

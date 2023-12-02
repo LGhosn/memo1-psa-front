@@ -14,7 +14,7 @@ export default function SuccessfulNotification( { titleAction, actionPage }: Pro
         <div className="flex bg-white dark:bg-gray-900 items-center px-6 py-4 text-sm rounded-b shadow-sm">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-green-500 stroke-current" fill="none"
               viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
           </svg>
           <div className="ml-3">
             <div className="text-xl font-bold text-left text-black dark:text-gray-50 mt-5">Éxito</div>
