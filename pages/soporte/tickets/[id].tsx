@@ -4,11 +4,10 @@ import Loading from "@/components/loading";
 import SelectElement from "@/components/selectElement";
 import { SideBar } from "@/components/sideBar";
 import { supportSideBarItems } from "@/utils/routes";
-import { priorityData, severityData, stateData } from "@/utils/ticketInfo";
+import { priorityData, severityData, stateData, translationTypeOfProblem } from "@/utils/ticketInfo";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { setElementInnerHtml, setElementValue, setFormatDate, setSelectValue } from "@/utils/utils";
-import { ButtonActionTaskTicket } from "@/components/soporte/buttonActionTT";
 import SuccessfulNotification from "@/components/successfulNotification";
 
 export default function Ticket() {
@@ -34,7 +33,7 @@ export default function Ticket() {
     // @ts-ignore
     setSelectValue("priority", ticket.priority);
     // @ts-ignore
-    setElementValue("typeOfProblem", ticket.type);
+    setElementValue("typeOfProblem", translationTypeOfProblem[ticket.type]);
     // @ts-ignore
     setElementValue("customerRS", ticket.customerRS);
     // @ts-ignore
