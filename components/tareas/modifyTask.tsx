@@ -116,8 +116,8 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
-                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                  <h1 className="text-xl font-bold leading-6 text-gray-900 mb-4">Modificacion de estados</h1>
+                <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                  <h1 className="text-xl font-bold leading-6 text-gray-900 mb-4">Edición de tarea</h1>
                   <div className="mt-2">
                   <div>
                   <div>
@@ -130,7 +130,7 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Descripción</label>
                       <div className="mt-1">
-                        <textarea  value={description} onChange={(e) => setDescription(e.target.value)} className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea rows={5} value={description} onChange={(e) => setDescription(e.target.value)} className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
 
@@ -152,19 +152,19 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
                             <option value={"blocked"}>Bloqueado</option>
                           </select>
                         </div>
+                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                        Cancelar</button>
+                        <button type="button" onClick={updateState} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                        Modificar
+                        </button>
+                    </div>
                     </div>    
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            
-                <button  type="button" onClick={closeForm} className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                  Cancelar</button>
-                  <button type="button" onClick={updateState} className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                   Modificar
-                </button>
-            </div>
+           
             
             
 
