@@ -49,6 +49,10 @@ export const supportSideBarItems = [
         title: "Responsables",
         href: "/responsables"
       },
+      {
+        title: "Clientes",
+        href: "/clientes"
+      }
     ]
   },
   {

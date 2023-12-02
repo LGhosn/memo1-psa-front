@@ -71,3 +71,5 @@ export const typeOfProblemData = [
     label: "Incidente"
   }
 ]
+
+export const translationTypeOfProblem = {"QUERY": "Consulta", "INCIDENT": "Incidente"}
