@@ -1,5 +1,6 @@
 import AlertMessage from "@/components/alertMessage";
 import InputElement from "@/components/inputElement";
+import Loading from "@/components/loading";
 import SelectElement from "@/components/selectElement";
 import SuccessfulNotification from "@/components/successfulNotification";
 import { priorityData, severityData, typeOfProblemData } from "@/utils/ticketInfo";
@@ -20,7 +21,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
   const [modalSuccessful, setModalSuccessful] = useState(false)
   
   useEffect( () => {
-    fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/clientes-psa/1.0.0/m/api/clientes")
+    fetch("https://psa-support-management.onrender.com/customers/externalApiCustomers")
         .then(response => response.json())
         .then(data => {
           const clientes = data.map((item: { id: any; rs: any; CUIT: any; }) => ({
@@ -45,7 +46,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
 
   function closeForm() { 
     setOpenForm(false); 
-    parent.window.location.reload();
+    // parent.window.location.reload();
   }
 
   function createTicket() {
@@ -64,7 +65,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
       return
     }
 
-    const data = {
+    const ticket = {
       // @ts-ignore
       "title": title.value,
       // @ts-ignore
@@ -77,13 +78,18 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
       "state": "OPEN",
       // @ts-ignore
       "type": typeOfProblem.value,
-      // @ts-ignore
-      "customerId": customers.value.split(';')[0],
-      // @ts-ignore
-      "customerCUIT": customers.value.split(';')[1],
-      // @ts-ignore
-      "customerRS": customers[customers.selectedIndex].text,
     }
+    const cliente = {
+      // @ts-ignore
+      "id": customers.value.split(';')[0],
+      // @ts-ignore
+      "rs": customers[customers.selectedIndex].text,
+      // @ts-ignore
+      "cuit": customers.value.split(';')[1],
+    }
+
+    const data = {"ticket": ticket, "customer": cliente}
+    console.log(data)
     // @ts-ignore
     fetch(`https://psa-support-management.onrender.com/tickets/?idProduct=${product.value}`, {
       method: 'POST',
@@ -113,16 +119,16 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
-                    <div className="mt-2">
-                      <InputElement title="Título" id="title" type="text" readonly={false}/>
-                      <SelectElement title="Clientes" id="customers" options={cliente} multiple={false}/>
-                      <SelectElement title="Producto" id="producto" options={producto} multiple={false}/>
-                      <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
-                      <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
-                      <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
-                      <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
-                    </div>
+                      <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{title}</h3>
+                      <div className="mt-2">
+                        <InputElement title="Título" id="title" type="text" readonly={false}/>
+                        <SelectElement title="Clientes" id="customers" options={cliente} multiple={false}/>
+                        <SelectElement title="Producto" id="producto" options={producto} multiple={false}/>
+                        <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
+                        <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
+                        <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
+                        <InputElement title="Descripción" id="description" type="textarea" readonly={false}/>
+                      </div>
                   </div>
                 </div>
               </div>

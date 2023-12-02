@@ -5,7 +5,7 @@ export default function ResponsableGridRow({ responsable }: {responsable: any}) 
 
     function openTicket() {
       //guardo en localStorage el nombre y apellido
-      window.localStorage.setItem('fullName', `${responsable['lastName']}, ${responsable['firstName']}`)
+      window.localStorage.setItem('fullName', `${responsable['Apellido']}, ${responsable['Nombre']}`)
       router.push(`/soporte/responsables/${responsable['legajo']}`)
     }
     
@@ -15,11 +15,11 @@ export default function ResponsableGridRow({ responsable }: {responsable: any}) 
               <div className="flex items-center text-gray-900">{responsable['legajo']}</div>
           </td>
           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`f${responsable['legajo']}`}>
-              <div className="flex items-center text-gray-900">{responsable['firstName']}</div>
+              <div className="flex items-center text-gray-900">{responsable['Nombre']}</div>
           </td>
 
           <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`ln${responsable['legajo']}`}>
-              <div className="text-sm leading-5 text-gray-900">{responsable['lastName']}</div>
+              <div className="text-sm leading-5 text-gray-900">{responsable['Apellido']}</div>
           </td>
       </tr>
   )

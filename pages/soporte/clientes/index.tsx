@@ -1,3 +1,4 @@
+import ClienteGridRow from "@/components/clientesGridRow";
 import HeaderItem from "@/components/headerItem";
 import Loading from "@/components/loading";
 import ResponsableGridRow from "@/components/responsableGridRow";
@@ -5,16 +6,16 @@ import { SideBar } from "@/components/sideBar";
 import { supportSideBarItems } from "@/utils/routes";
 import { useEffect, useState } from "react";
 
-export default function Responsables() {
+export default function Clientes() {
   const [loading, setLoading] = useState(true)
-  const [responsables, setResponsables] = useState([])
+  const [clientes, setClientes] = useState([])
 
   useEffect(() => {
-      fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+      fetch(`https://psa-support-management.onrender.com/customers/externalApiCustomers`)
       .then((res) => {
         return res.json()
       }).then((res) => {
-        setResponsables(res)
+        setClientes(res)
         setLoading(false)
       })
   }, [])
@@ -27,7 +28,7 @@ export default function Responsables() {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div> :
           <>
           <div className="mb-4">
-              <h1 className="text-3xl font-bold text-black decoration-gray-400">Responsables</h1>
+              <h1 className="text-3xl font-bold text-black decoration-gray-400">Clientes</h1>
           </div>
           <div className="flex flex-col">
               <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -35,15 +36,15 @@ export default function Responsables() {
                       <table className="min-w-full">
                           <thead>
                           <tr>
-                              <HeaderItem title="Legajo" />
-                              <HeaderItem title="Nombre" />
-                              <HeaderItem title="Apellido" />
+                              <HeaderItem title="Id" />
+                              <HeaderItem title="Razón Social" />
+                              <HeaderItem title="CUIT" />
                           </tr>
                           </thead>
 
                           <tbody>
-                          {responsables.map((responsable) => (
-                              <ResponsableGridRow key={responsable['id']} responsable={responsable} />
+                          {clientes.map((cliente) => (
+                              <ClienteGridRow key={cliente['id']} cliente={cliente} />
                               ))}
                           </tbody>
                       </table>

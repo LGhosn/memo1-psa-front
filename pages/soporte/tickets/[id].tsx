@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { setElementInnerHtml, setElementValue, setFormatDate, setSelectValue } from "@/utils/utils";
 import { ButtonActionTaskTicket } from "@/components/soporte/buttonActionTT";
+import SuccessfulNotification from "@/components/successfulNotification";
 
 export default function Ticket() {
   const [loading, setLoading] = useState(true)
@@ -16,6 +17,7 @@ export default function Ticket() {
   const [empleados, setEmpleados] = useState([])
   const [responsablesAsignados, setResponsablesAsignados] = useState([])
   const [responsables, setResponsables] = useState([])
+  const [modalSuccessful, setModalSuccessful] = useState(false)
   const router = useRouter();
   const { id } = router.query;
 
@@ -79,7 +81,7 @@ export default function Ticket() {
   useEffect(() => {
     if (!loading) {
       setupData()
-      fetch("https://anypoint.mulesoft.com/mocking/api/v1/sources/exchange/assets/754f50e8-20d8-4223-bbdc-56d50131d0ae/recursos-psa/1.0.0/m/api/recursos")
+      fetch("https://psa-support-management.onrender.com/employees/externalApiEmployees")
       .then(response => response.json())
       .then(data => {
         const employees = data.map((item: { legajo: any; Apellido: any; Nombre: any; }) => ({
@@ -155,7 +157,7 @@ export default function Ticket() {
       },
       body: JSON.stringify(responsable)
     })
-    router.reload()
+    setModalSuccessful(true)
   }
 
   // @ts-ignore
@@ -166,7 +168,8 @@ export default function Ticket() {
     setResponsablesAsignados(opcionesSeleccionadas);
   }
   return (
-<div className="flex flex-row">
+    <>
+    <div className="flex flex-row">
       <SideBar items={supportSideBarItems} />
       <div className="container mx-auto mt-8 p-4">
         {loading ? (
@@ -203,5 +206,9 @@ export default function Ticket() {
         )}
       </div>
     </div>
+    {modalSuccessful && (
+      <SuccessfulNotification titleAction="guardado" actionPage={() => router.reload()}/>
+    )}
+    </>
   )
 }
