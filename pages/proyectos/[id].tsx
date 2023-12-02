@@ -86,7 +86,7 @@ export default function Proyecto () {
       }
     }) 
     
-    const porcentaje = (contador*100)/list.length;
+    const porcentaje = Number(((contador*100)/list.length).toFixed(0));
     
   return (
     <div className="flex flex-row">
