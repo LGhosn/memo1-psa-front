@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 type Props = {
   title: string;
@@ -11,10 +11,10 @@ type Props = {
 export default function SelectElement( { title, id, options, multiple, onChange}: Props) {
   const [change, setChange] = useState(false)
 
-  function handleChange() {
+  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     setChange(true)
     if (onChange) {
-      onChange
+      onChange(event)
     }
   }  
 

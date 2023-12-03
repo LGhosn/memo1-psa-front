@@ -10,6 +10,7 @@ import TicketGridRow from "@/components/ticketGridRow";
 import ButtonForCreation from "../ButtonForCreation";
 import StandardTicketTable from "@/components/soporte/standardTicketTable";
 import { ActionButton } from "@/components/actionButton";
+import StandardButton from "@/components/standardButton";
 
 
 export default function Responsable() {
@@ -54,7 +55,7 @@ export default function Responsable() {
       <>
       <StandardTicketTable list={ticketsResponsable} />
       <div className="p-2">
-        <ActionButton onClick={() => router.back()} title="Volver" style={"w-28"}/>
+        <StandardButton onClick={() => router.back()} title="Volver" back/>
       </div>
       </>
       }
