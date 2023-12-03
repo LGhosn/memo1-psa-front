@@ -20,8 +20,7 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
   const [name, setName] = useState(`${task['name']}`);
   const [description, setDescription] = useState(`${task['description']}`);
   const [assignedTo, setAssignedTo]= useState(`${task['assignedTo']}`);
-  const [projectId, setProjectId]= useState(`${task['projectId']}`);
-  const [initialDate, setInitialDate]= useState(`${task['initialDate']}`);
+  
 
   const [response , setResponse] = useState(null)
   const [error, setError] = useState(null)
@@ -34,7 +33,7 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
 
   useEffect( () => {
     setLoading(true)
-    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+    fetch(`https://psa-project-managment.onrender.com/api/v1/employees`)
         .then(response => response.json())
         .then(data => {
           setResponse(data);
@@ -61,10 +60,9 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
         "id": 34,
         "name": name,
         "description": description,
-        "assignedTo": "Mendoza Mario",
-        "creationDate": "2023-12-02T04:04:23.105415",
-        "initialDate": "2023-12-02T04:04:32.999595",
-        "projectId": 28
+        "assignedTo": assignedTo,
+        "status": task['status']
+       
           
     }
 
@@ -80,27 +78,27 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
                   setModalSuccessful(true);
                 })
 
-    // fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/task/${task['id']}`, {
-    //       method: 'PUT',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify(data)
-    //     })
-    //         .then((res) => {
-    //           if (!res.ok) {
-    //             throw new Error('Error en la creación del recurso');
-    //           }
-    //           return res.json();
-    //         })
-    //         .then(() => {
-    //           setModalSuccessful(true);
-    //         })
+    fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/task/${task['id']}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        })
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error('Error en la creación del recurso');
+              }
+              return res.json();
+            })
+            .then(() => {
+              setModalSuccessful(true);
+            })
             
-    //         // @ts-ignore
-    //         .catch((error) => {
-    //           setErrorMessage('No se pudo crear el proyecto.')
-    //          })
+            // @ts-ignore
+            .catch((error) => {
+              setErrorMessage('No se pudo crear el proyecto.')
+             })
 
 }
 

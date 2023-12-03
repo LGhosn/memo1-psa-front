@@ -31,7 +31,7 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
 
   useEffect( () => {
     setLoading(true)
-    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+    fetch(`https://psa-project-managment.onrender.com/api/v1/employees`)
         .then(response => response.json())
         .then(data => {
           setResponse(data);
