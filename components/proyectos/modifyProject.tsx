@@ -149,7 +149,7 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Líder de proyecto</label>
                       <select id="leader" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         { error && <option>Error al obtener los empleados..</option>}
-                        { loading && <option >Cargando empleados..</option>}
+                        { loading}
                       </select>
                     </div>
                       <label htmlFor="email" className="text-base block font-medium text-gray-700">Estado de {title} </label>
