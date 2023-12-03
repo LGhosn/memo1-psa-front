@@ -3,7 +3,7 @@ import SuccessfulNotification from "../successfulNotification";
 import { useState} from "react";
 import ErrorModal from "../errorMessageModal";
 import { StatusPath } from "@/types/types";
-
+import { useEffect } from "react";
 
 
 type PropsForm = {
@@ -29,6 +29,29 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
   function reloadPage(){router.reload() }
   function closeErrorMessage() { setErrorMessage('') }
 
+  useEffect( () => {
+    setLoading(true)
+    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+        .then(response => response.json())
+        .then(data => {
+          setResponse(data);
+          let select = document.getElementById('leader');
+          // @ts-ignore
+          let opts = document.getElementById('leader').length;
+          if (opts < 3) {
+            // @ts-ignore
+            data?.map(e => {
+              let opt = document.createElement('option');
+              opt.value       = e['legajo'];
+              opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
+              // @ts-ignore
+              select.appendChild(opt);
+            });
+          }
+        })
+        .catch(error => setError(error))
+        .finally(() => setLoading(false))
+  }, [loading]);
   
   function updateState() {
     const data = {
@@ -82,27 +105,7 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
              })
 
         
-          setLoading(true)
-     fetch('https://psa-support-management.onrender.com/employees/')
-        .then(response => response.json())
-        .then(data => {
-          setResponse(data);
-          let select = document.getElementById('leader');
-          // @ts-ignore
-          let opts = document.getElementById('leader').length;
-          if (opts < 3) {
-            // @ts-ignore
-            data?.map(e => {
-              let opt = document.createElement('option');
-              opt.value       = e['legajo'];
-              opt.innerText   = e['lastName'] + ' ' + e['firstName'];
-              // @ts-ignore
-              select.appendChild(opt);
-            });
-          }
-          })
-          .catch(error => setError(error))
-          .finally(() => setLoading(false))
+          
 }
 
   return (

@@ -41,7 +41,7 @@ export function ProjectCreationForm({setOpenForm }: PropsForm) {
 
   useEffect( () => {
     setLoading(true)
-    fetch(`https://psa-support-management.onrender.com/employees/`)
+    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
         .then(response => response.json())
         .then(data => {
           setResponse(data);
@@ -53,7 +53,7 @@ export function ProjectCreationForm({setOpenForm }: PropsForm) {
             data?.map(e => {
               let opt = document.createElement('option');
               opt.value       = e['legajo'];
-              opt.innerText   = e['lastName'] + ' ' + e['firstName'];
+              opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
               // @ts-ignore
               select.appendChild(opt);
             });
@@ -61,7 +61,7 @@ export function ProjectCreationForm({setOpenForm }: PropsForm) {
         })
         .catch(error => setError(error))
         .finally(() => setLoading(false))
-  }, []);
+  }, [loading]);
 
 
   function createProject() {

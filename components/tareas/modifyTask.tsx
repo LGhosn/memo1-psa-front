@@ -3,7 +3,7 @@ import SuccessfulNotification from "../successfulNotification";
 import { useState} from "react";
 import ErrorModal from "../errorMessageModal";
 import { StatusPath } from "@/types/types";
-
+import { useEffect } from "react";
 
 
 type PropsForm = {
@@ -32,7 +32,29 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
   function reloadPage(){router.reload() }
   function closeErrorMessage() { setErrorMessage('') }
 
-  console.log(name,description,assignedTo,initialDate,projectId,task['id'])
+  useEffect( () => {
+    setLoading(true)
+    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+        .then(response => response.json())
+        .then(data => {
+          setResponse(data);
+          let select = document.getElementById('leader');
+          // @ts-ignore
+          let opts = document.getElementById('leader').length;
+          if (opts < 3) {
+            // @ts-ignore
+            data?.map(e => {
+              let opt = document.createElement('option');
+              opt.value       = e['legajo'];
+              opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
+              // @ts-ignore
+              select.appendChild(opt);
+            });
+          }
+        })
+        .catch(error => setError(error))
+        .finally(() => setLoading(false))
+  }, [loading]);
   
   function updateState() {
     const data = {        
@@ -80,28 +102,6 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
     //           setErrorMessage('No se pudo crear el proyecto.')
     //          })
 
-        
-          setLoading(true)
-     fetch('https://psa-support-management.onrender.com/employees/')
-        .then(response => response.json())
-        .then(data => {
-          setResponse(data);
-          let select = document.getElementById('assignedTo');
-          // @ts-ignore
-          let opts = document.getElementById('assignedTo').length;
-          if (opts < 3) {
-            // @ts-ignore
-            data?.map(e => {
-              let opt = document.createElement('option');
-              opt.value       = e['legajo'];
-              opt.innerText   = e['lastName'] + ' ' + e['firstName'];
-              // @ts-ignore
-              select.appendChild(opt);
-            });
-          }
-          })
-          .catch(error => setError(error))
-          .finally(() => setLoading(false))
 }
 
   return (

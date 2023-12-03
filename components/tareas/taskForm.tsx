@@ -3,6 +3,7 @@ import SuccessfulNotification from "../successfulNotification";
 import { useRouter } from "next/router";
 import ErrorModal from "../errorMessageModal";
 
+
 type PropsForm = {
   projectId: string;
   setOpenForm: (value: boolean) => void
@@ -30,6 +31,30 @@ export function TaskCreationForm({projectId, setOpenForm }: PropsForm) {
   function closeForm() { setOpenForm(false); }
   function closeErrorMessage() { setErrorMessage('') }
   function reloadPage(){ router.reload() }
+
+  useEffect( () => {
+    setLoading(true)
+    fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+        .then(response => response.json())
+        .then(data => {
+          setResponse(data);
+          let select = document.getElementById('leader');
+          // @ts-ignore
+          let opts = document.getElementById('leader').length;
+          if (opts < 3) {
+            // @ts-ignore
+            data?.map(e => {
+              let opt = document.createElement('option');
+              opt.value       = e['legajo'];
+              opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
+              // @ts-ignore
+              select.appendChild(opt);
+            });
+          }
+        })
+        .catch(error => setError(error))
+        .finally(() => setLoading(false))
+  }, [loading]);
 
   useEffect(() => {
     const isValid:any = validate();
