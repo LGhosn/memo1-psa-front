@@ -22,10 +22,17 @@ export default function Task () {
 
   function setupData() {
     let description = document.getElementById("description")
-  
-
     // @ts-ignore
     let creationDateArray: string[] = (task['creationDate']).split('T');
+   
+    // @ts-ignore
+    if(task['initialDate']){
+      // @ts-ignore
+      let initialDateArray: string[] = (task['initialDate']).split('T');
+      setElementValue("initialDate", `${(initialDateArray[0]).split('-').reverse().join("/")}`)
+    }
+   
+    
     
     // @ts-ignore
     setElementInnerHtml("name", task.name);
@@ -34,15 +41,13 @@ export default function Task () {
     // @ts-ignore
     setElementValue("status", Status[task.status]);
     setElementValue("creationDate", `${(creationDateArray[0]).split('-').reverse().join("/")}`);
-
     //@ts-ignore
     setElementValue("id", task.id)
     //@ts-ignore
     setElementValue("assignedTo", task.assignedTo)
     //@ts-ignore
     setElementValue("projectId", task.projectId)
-    //@ts-ignore
-    setElementValue("initialDate", task.initialDate)
+    
   }
 
 

@@ -10,7 +10,7 @@ const ProgressBar=({ percentage }: ProgressBarProps) => {
   }
  return (
   <div>
-    <div className="relative h-2 w-1/2 bg-gray-200 rounded-full">
+    <div className="relative h-5 w-2/3 bg-gray-200 rounded-full">
       <div
         className="absolute left-0 top-0 h-2 bg-blue-600 rounded-full"
         style={{ width: `${percentage}%` }}
