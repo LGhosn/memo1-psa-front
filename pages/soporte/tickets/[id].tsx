@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { setElementInnerHtml, setElementValue, setFormatDate, setSelectValue } from "@/utils/utils";
 import SuccessfulNotification from "@/components/successfulNotification";
+import StandardButton from "@/components/standardButton";
 
 export default function Ticket() {
   const [loading, setLoading] = useState(true)
@@ -17,6 +18,7 @@ export default function Ticket() {
   const [responsablesAsignados, setResponsablesAsignados] = useState([])
   const [responsables, setResponsables] = useState([])
   const [modalSuccessful, setModalSuccessful] = useState(false)
+  const [saveChanges, setSaveChanges] = useState(false)
   const router = useRouter();
   const { id } = router.query;
 
@@ -158,13 +160,19 @@ export default function Ticket() {
     })
     setModalSuccessful(true)
   }
+  // @ts-ignore
+  function handleSelectChange(event) {
+    console.log("select")
+    setSaveChanges(true)
+  }
 
   // @ts-ignore
-  const handleSelectChange = (event) => {
+  const handleSelectMultipleChange = (event) => {
     // @ts-ignore
     const opcionesSeleccionadas = Array.from(event.target.selectedOptions, (option) => option.value + ','+ option.text);
     // @ts-ignore
     setResponsablesAsignados(opcionesSeleccionadas);
+    handleSelectChange(event)
   }
   return (
     <>
@@ -181,10 +189,10 @@ export default function Ticket() {
               <h1 className="text-3xl font-bold mb-4 text-center text-black" id="title"></h1>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <SelectElement title="Estado" id="state" options={stateData} multiple={false} />
-                  <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false} />
-                  <SelectElement title="Severidad" id="severity" options={severityData} multiple={false} />
-                  <SelectElement title="Responsable" id="responsables" options={empleados} multiple onChange={handleSelectChange} />
+                  <SelectElement title="Estado" id="state" options={stateData} multiple={false} onChange={handleSelectChange}/>
+                  <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false} onChange={handleSelectChange}/>
+                  <SelectElement title="Severidad" id="severity" options={severityData} multiple={false} onChange={handleSelectChange}/>
+                  <SelectElement title="Responsable" id="responsables" options={empleados} multiple onChange={handleSelectMultipleChange} />
                 </div>
                 <div>
                   <InputElement title="Tipo de problema" id="typeOfProblem" type="text" readonly />
@@ -195,11 +203,14 @@ export default function Ticket() {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center space-x-4">
-              <ActionButton onClick={() => router.back()} title="Volver" />
+            <div className="flex justify-between mt-5">
+              <StandardButton title="Volver" onClick={() => router.back()} back/>
+              { saveChanges ? 
+                <ActionButton title="Guardar" onClick={guardarTicket} style="bg-cyan-300"/>
+                : <></>
+              }
               {/* @ts-ignore */}
-              <ActionButton onClick={() => router.push(`/soporte/tareas?ticketId=${id}&ticketName=${ticket.title}`)} title="Tareas" />
-              <ActionButton title="Guardar" onClick={guardarTicket} />
+              <StandardButton title="Ver Tareas" onClick={() => router.push(`/soporte/tareas?ticketId=${id}&ticketName=${ticket.title}`)} back={false}/>
             </div>
           </>
         )}

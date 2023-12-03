@@ -10,6 +10,7 @@ import TicketGridRow from "@/components/ticketGridRow";
 import ButtonForCreation from "../ButtonForCreation";
 import { ActionButton } from "@/components/actionButton";
 import StandardTicketTable from "@/components/soporte/standardTicketTable";
+import StandardButton from "@/components/standardButton";
 
 
 export default function Producto() {
@@ -64,9 +65,10 @@ export default function Producto() {
       loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
       <>
       <StandardTicketTable list={ticketsProduct} />
-      <div className="p-2 flex flex-row align-middle space-x-2">
+      <div className="flex justify-between mt-5">
+        <StandardButton title="Volver" onClick={() => router.back()} back/>
+        {/* @ts-ignore */}
         <ButtonForCreation title="Crear ticket" />
-        <ActionButton onClick={() => router.back()} title="Volver" style={"w-28 h-10"}/>
       </div>
       </>
       }

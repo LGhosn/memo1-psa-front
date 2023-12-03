@@ -34,7 +34,7 @@ export default function Tickets() {
           loading ? <div className="flex flex-row justify-center"> <Loading /> </div>:
           <>
           <StandardTicketTable list={list} />
-          <div className="p-2">
+          <div className="p-2 flex justify-end">
             <ButtonForCreation title="Crear ticket" />
           </div>
           </>

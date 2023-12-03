@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { setElementInnerHtml } from "@/utils/utils";
 import StandardTicketTable from "@/components/soporte/standardTicketTable";
 import { ActionButton } from "@/components/actionButton";
+import StandardButton from "@/components/standardButton";
 
 
 export default function Cliente() {
@@ -50,7 +51,7 @@ export default function Cliente() {
       <>
       <StandardTicketTable list={ticketsClientes} />
       <div className="p-2">
-        <ActionButton onClick={() => router.back()} title="Volver" style={"w-28"}/>
+        <StandardButton title="Volver" back/>
       </div>
       </>
       }
