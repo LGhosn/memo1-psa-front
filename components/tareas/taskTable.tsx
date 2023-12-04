@@ -4,6 +4,8 @@ import TaskGridRow from "./taskGridRow";
 import { stateData } from "@/utils/projectState";
 import Filter from "../soporte/filter";
 import { ButtonActionTask } from "./buttonActionTask";
+import { useRouter } from "next/router";
+
 
 type Props = {
   list: Array<any>
@@ -13,6 +15,7 @@ type Props = {
 export default function TaskTable( { list, projectId }: Props) {
   const [filteredData, setFilteredData] = useState(list);
   const [selectedEstado, setSelectedEstado] = useState('')
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -39,11 +42,25 @@ export default function TaskTable( { list, projectId }: Props) {
     // Actualizar la lista filtrada con la lista original
     setFilteredData(list);
   };
-
+  function backPage(){
+    router.push(`/proyectos/${projectId}`)
+   
+  }
   return(
     <div className="flex flex-col">
         <div className="flex justify-between">
+       
         <div className="flex flex-row justify-start items-center space-x-5 p-2">
+        <div className="flex justify-between ">
+        <button  type="button" onClick={backPage} className="flex flex-row text-gray-700 bg-white hover:bg-gray-300 focus:ring-2 focus:outline-none focus:ring-gray-200 rounded-lg  text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="h-5 w-5 mt-1 bi bi-arrow-left-circle mr-2" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+            </svg>
+            <div className="sm:text-lg">Volver</div>
+          
+          </button>
+            
+          </div>
        
         <Filter label={"Estado:"} value={selectedEstado} onChange={handleEstadoChange} options={stateData}/>
         <button

@@ -13,10 +13,7 @@ export default function Tareas() {
   const [loading, setLoading] = useState(true)
   const router = useRouter();
   const projectId = router?.query?.id as string;
-  function backPage(){
-    router.push(`/proyectos/${projectId}`)
-   
-  }
+
   useEffect(() => {
     if (router.isReady) {
       fetch(`https://psa-project-managment.onrender.com/api/v1/tasks/project/${projectId}`)

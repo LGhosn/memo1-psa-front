@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 import { ModalDelete } from '../modalDelete';
-import { ModifyStatus } from './modifyProject';
+import { ModiftProject } from './modifyProject';
 import { ProjectCreationForm } from './projectForm';
 
 type Props = {
@@ -32,7 +32,7 @@ export const ButtonActionProject = ( {title,proyecto, id, actionType, style, ico
         ); 
       case 'modifyProject':
         return (
-          <ModifyStatus elemento={proyecto} setOpenStatus={setOpen} title='proyecto' url= {urlProjectStatus} />
+          <ModiftProject elemento={proyecto} setOpenStatus={setOpen} title='proyecto' url= {urlProjectStatus} />
         ); 
       case 'createProject':
         return (

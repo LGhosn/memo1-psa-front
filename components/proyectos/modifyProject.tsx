@@ -13,7 +13,7 @@ type PropsForm = {
   elemento: any;
 };
 
-export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) {
+export function ModiftProject({setOpenStatus , title, url, elemento}: PropsForm) {
   const router = useRouter();
   const [modalSuccessful, setModalSuccessful] = useState(false);
   const [name, setName] = useState(`${elemento['name']}`);
@@ -157,9 +157,8 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
                     </div>
                       <label htmlFor="email" className="text-base block font-medium text-gray-700">Estado de {title} </label>
                         <div className="mt-1">
-                          <select id="state" name="state" autoComplete="state" className="border border-black shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-base  rounded-md text-gray-900">
-                            <option value={//@ts-ignore
-                              StatusPath[elemento['status']]}>Seleccione una opción</option>
+                          <select id="state" name="state" autoComplete="state" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option>Seleccione una opción</option>
                             <option value={"notStarted"}>No iniciado</option>
                             <option value={"inProgress"}>En progreso</option>
                             <option value={"completed"}>Finalizado</option>

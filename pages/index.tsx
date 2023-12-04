@@ -6,7 +6,7 @@ import { mainRoutes } from "@/utils/routes"
 export default function Home() {
   return (
     <MainContainer title="Módulos">
-      <div className="flex space-x-16 mt-10 items-center bg-white">
+      <div className="flex space-x-16 mt-10 items-center bg-zinc-200 ">
         {mainRoutes.map((item) => (
           <MainButton {...item} key={item.title} styleButton={{
             height: '90px',
