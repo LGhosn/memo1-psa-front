@@ -161,7 +161,7 @@ export function ModiftProject({setOpenStatus , title, url, elemento}: PropsForm)
                             <option>Seleccione una opción</option>
                             <option value={"notStarted"}>No iniciado</option>
                             <option value={"inProgress"}>En progreso</option>
-                            <option value={"completed"}>Finalizado</option>
+                            <option value={"completed"}>Completado</option>
                             <option value={"blocked"}>Bloqueado</option>
                           </select>
                         </div>
