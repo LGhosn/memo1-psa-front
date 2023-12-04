@@ -126,7 +126,7 @@ export function ProjectCreationForm({setOpenForm }: PropsForm) {
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Descripción</label>
                       <div className="mt-1">
-                        <textarea  value={description} onChange={(e) => setDescription(e.target.value)} className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
+                        <textarea rows={7} value={description} onChange={(e) => setDescription(e.target.value)} className=" shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-black-600 block w-full sm:text-sm border-gray-300 rounded-md text-gray-900"></textarea>
                       </div>
                     </div>
 

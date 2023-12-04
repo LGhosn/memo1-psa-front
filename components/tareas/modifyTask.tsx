@@ -19,7 +19,6 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
 
   const [name, setName] = useState(`${task['name']}`);
   const [description, setDescription] = useState(`${task['description']}`);
-  const [assignedTo, setAssignedTo]= useState(`${task['assignedTo']}`);
   
 
   const [response , setResponse] = useState(null)
@@ -44,7 +43,7 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
             // @ts-ignore
             data?.map(e => {
               let opt = document.createElement('option');
-              opt.value       = e['legajo'];
+              opt.value       =  e['Nombre'] + ' ' + e['Apellido'];
               opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
               // @ts-ignore
               select.appendChild(opt);
@@ -54,13 +53,17 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
         .catch(error => setError(error))
         .finally(() => setLoading(false))
   }, [loading]);
+
   
   function updateState() {
+    let assignedTo = document.getElementById("assignedTo")
+
     const data = {        
         "id": 34,
         "name": name,
         "description": description,
-        "assignedTo": assignedTo,
+        //@ts-ignore
+        "assignedTo": assignedTo[assignedTo.selectedIndex].value,
         "status": task['status']
        
           
@@ -136,7 +139,8 @@ export function ModifyTask({setOpenStatus , title, url, task}: PropsForm) {
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Responsable asignado</label>
                       <select id="assignedTo" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         { error && <option>Error al obtener los empleados..</option>}
-                        { loading }
+                        <option value={task['assignedTo']}>Seleccione una opción</option>
+                        { loading}
                       </select>
                     </div>
                       <label htmlFor="email" className="text-base block font-medium text-gray-700">Estado de {title} </label>

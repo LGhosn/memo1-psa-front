@@ -19,7 +19,6 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
   const [name, setName] = useState(`${elemento['name']}`);
   const [description, setDescription] = useState(`${elemento['description']}`);
   const [totalHours, setTotalHours] = useState(`${elemento['totalHours']}`);
-  const [leader, setLeader]= useState(`${elemento['leader']}`);
   const [response , setResponse] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -42,7 +41,7 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
             // @ts-ignore
             data?.map(e => {
               let opt = document.createElement('option');
-              opt.value       = e['legajo'];
+              opt.value       = e['Nombre'] + ' ' + e['Apellido'];
               opt.innerText   = e['Nombre'] + ' ' + e['Apellido'];
               // @ts-ignore
               select.appendChild(opt);
@@ -52,15 +51,17 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
         .catch(error => setError(error))
         .finally(() => setLoading(false))
   }, [loading]);
+
   
   function updateState() {
+    let leader = document.getElementById("leader")
     const data = {
       // @ts-ignore
       "name": name,
       // @ts-ignore
       "description": description,
       // @ts-ignore
-      "leader": leader,
+      "leader": leader[leader.selectedIndex].value,
       // @ts-ignore
       "totalHours": totalHours,
     }
@@ -68,7 +69,8 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
     const state = document.getElementById("state");
     // @ts-ignore
     const stateValue=state[state.selectedIndex].value;
-    console.log(stateValue)
+
+    
 
     fetch(url+`${stateValue}`, {
     method: 'PATCH'})
@@ -149,6 +151,7 @@ export function ModifyStatus({setOpenStatus , title, url, elemento}: PropsForm) 
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:black">Líder de proyecto</label>
                       <select id="leader" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-black focus:border-black block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         { error && <option>Error al obtener los empleados..</option>}
+                        <option value={elemento['leader']}>Seleccione una opción</option>
                         { loading}
                       </select>
                     </div>
