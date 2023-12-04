@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
 import HeaderItem from "../headerItem";
 import ProjectGridRow from "./projectGridRow";
-import { stateData } from "@/utils/projectState";
+import { stateData, leaderData } from "@/utils/projectState";
 import Filter from "../soporte/filter";
 import { ButtonActionProject } from "./buttonActionProject";
 
@@ -12,6 +12,8 @@ type Props = {
 export default function ProjectTable( { list }: Props) {
   const [filteredData, setFilteredData] = useState(list);
   const [selectedEstado, setSelectedEstado] = useState('')
+  const [selectedLider, setSelectedLider] = useState('')
+
 
 
   // Función para aplicar filtros por columna
@@ -46,6 +48,21 @@ export default function ProjectTable( { list }: Props) {
     setSelectedEstado(e.target.value);
   };
 
+  useEffect(() => {
+    if (selectedLider) {
+      const filteredByLeader= filteredData.filter((item) => item.leader === selectedLider);
+      setFilteredData(filteredByLeader);
+    } else {
+      setFilteredData(list);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLider])
+
+
+  const handleLeaderChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setSelectedLider(e.target.value);
+  };
+
 
 
   const resetFilters = () => {
@@ -55,6 +72,7 @@ export default function ProjectTable( { list }: Props) {
     setSelectedEstado('');
     // Actualizar la lista filtrada con la lista original
     setFilteredData(list);
+    setSelectedLider('');
   };
 
   return(
@@ -69,6 +87,7 @@ export default function ProjectTable( { list }: Props) {
           className="shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-fit border border-gray-300 rounded-md text-gray-900"
         />
         <Filter label={"Estado:"} value={selectedEstado} onChange={handleEstadoChange} options={stateData}/>
+        <Filter label={"Líder:"} value={selectedLider} onChange={handleLeaderChange} options={leaderData}/>
         <button
         onClick={resetFilters}
         className="p-2 border border-gray-300 rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring focus:border-indigo-500"
@@ -90,6 +109,7 @@ export default function ProjectTable( { list }: Props) {
             <HeaderItem title="ID" />
             <HeaderItem title="Nombre" />
             <HeaderItem title="Estado" />
+            <HeaderItem title="Líder" />
             </tr>
           </thead>
           <tbody>

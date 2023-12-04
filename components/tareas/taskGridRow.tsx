@@ -42,6 +42,10 @@ export default function TaskGridRow({task, asociadaATicket, onClick}: Props) {
                 <div className="flex items-center text-gray-900"> {status}</div>
             </td>
 
+            <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${task['Nombre']}`}>
+                <div className="flex items-center text-gray-900"> {task['assignedTo']}</div>
+            </td>
+
            {
             asociadaATicket != undefined  && asociadaATicket == true?
             <td 

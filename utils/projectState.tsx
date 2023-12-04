@@ -16,3 +16,18 @@ export const stateData = [
       label: "Bloqueado"
     }
   ]
+
+  export const leaderData = [
+    {
+      value: "Maria Perez",
+      label: "Maria Perez"
+    },
+    {
+      value: "Patricia Gaona",
+      label: "Patricia Gaona"
+    },
+    {
+      value: "Mario Mendoza",
+      label: "Mario Mendoza"
+    }
+  ]

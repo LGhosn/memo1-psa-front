@@ -24,6 +24,9 @@ export default function ProjectGridRow({ project }: {project: any}) {
         <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`est${project['Nombre']}`}>
             <div className="flex items-center text-gray-900">{status}</div>
         </td>
+        <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200" key={`lid${project['Nombre']}`}>
+            <div className="flex items-center text-gray-900">{project['leader']}</div>
+        </td>
         
       </tr>
   )

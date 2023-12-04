@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
 import HeaderItem from "../headerItem";
 import TaskGridRow from "./taskGridRow";
-import { stateData } from "@/utils/projectState";
+import { stateData , leaderData} from "@/utils/projectState";
 import Filter from "../soporte/filter";
 import { ButtonActionTask } from "./buttonActionTask";
 import { useRouter } from "next/router";
@@ -15,6 +15,7 @@ type Props = {
 export default function TaskTable( { list, projectId }: Props) {
   const [filteredData, setFilteredData] = useState(list);
   const [selectedEstado, setSelectedEstado] = useState('')
+  const [selectedResponsable, setSelectedResponsable] = useState('')
   const router = useRouter();
 
 
@@ -32,12 +33,24 @@ export default function TaskTable( { list, projectId }: Props) {
     setSelectedEstado(e.target.value);
   };
 
+  useEffect(() => {
+    if (selectedResponsable) {
+      const filteredByAssignedTo= filteredData.filter((item) => item.assignedTo === selectedResponsable);
+      setFilteredData(filteredByAssignedTo);
+    } else {
+      setFilteredData(list);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedResponsable])
+
+
+  const handleResponsableChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setSelectedResponsable(e.target.value);
+  };
 
 
   const resetFilters = () => {
     // Restablecer valores de los estados de filtro
-    //@ts-ignore
-    document.getElementById("searchBar").value = ""
     setSelectedEstado('');
     // Actualizar la lista filtrada con la lista original
     setFilteredData(list);
@@ -63,6 +76,7 @@ export default function TaskTable( { list, projectId }: Props) {
           </div>
        
         <Filter label={"Estado:"} value={selectedEstado} onChange={handleEstadoChange} options={stateData}/>
+        <Filter label={"Líder:"} value={selectedResponsable} onChange={handleResponsableChange} options={leaderData}/>
         <button
         onClick={resetFilters}
         className="p-2 border border-gray-300 rounded-md text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring focus:border-indigo-500"
@@ -84,6 +98,7 @@ export default function TaskTable( { list, projectId }: Props) {
             <HeaderItem title="ID" />
             <HeaderItem title="Nombre" />
             <HeaderItem title="Estado" />
+            <HeaderItem title="Responsable" /> 
             </tr>
           </thead>
           <tbody>
