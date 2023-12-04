@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { setElementInnerHtml, setElementValue, setFormatDate, setSelectValue } from "@/utils/utils";
 import SuccessfulNotification from "@/components/successfulNotification";
 import StandardButton from "@/components/standardButton";
+import ErrorModal from "@/components/errorMessageModal";
 
 export default function Ticket() {
   const [loading, setLoading] = useState(true)
@@ -19,9 +20,12 @@ export default function Ticket() {
   const [responsablesAsignados, setResponsablesAsignados] = useState([])
   const [responsables, setResponsables] = useState([])
   const [modalSuccessful, setModalSuccessful] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const [saveChanges, setSaveChanges] = useState(false)
   const router = useRouter();
   const { id } = router.query;
+
+  function closeErrorMessage() { setErrorMessage('') }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function setupData() {
@@ -157,14 +161,6 @@ export default function Ticket() {
     }
     console.log(responsable)
 
-    fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateFields?newState=${state}&newSeverity=${severity}&newPriority=${priority}`, {
-      method: 'PATCH',
-      headers: {
-        'accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-    })
-
     fetch(`https://psa-support-management.onrender.com/tickets/${id}/assignResponsible`, {
       method: 'POST',
       headers: {
@@ -173,12 +169,32 @@ export default function Ticket() {
       },
       body: JSON.stringify(responsable)
     })
-    setModalSuccessful(true)
+
+    fetch(`https://psa-support-management.onrender.com/tickets/${id}/updateFields?newState=${state}&newSeverity=${severity}&newPriority=${priority}`, {
+      method: 'PATCH',
+      headers: {
+        'accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error('Error en la creación del recurso');
+      }
+      return res.json()
+    }).then(() => setModalSuccessful(true))
+    .catch((error) => {
+      console.log(error)
+      setErrorMessage("No se puede modificar un ticket ya 'Resuelto'")
+    })
+
+
   }
   // @ts-ignore
   function handleSelectChange(event) {
-    console.log("select")
-    setSaveChanges(true)
+    //@ts-ignore
+    // if (ticket.state != "SOLVED"){
+      setSaveChanges(true)
+    // }
   }
 
   // @ts-ignore
@@ -235,6 +251,9 @@ export default function Ticket() {
     {modalSuccessful && (
       <SuccessfulNotification titleAction="guardado" actionPage={() => router.reload()}/>
     )}
+    {errorMessage &&
+         <ErrorModal action= {closeErrorMessage} value={errorMessage}/>
+    }
     </>
   )
 }

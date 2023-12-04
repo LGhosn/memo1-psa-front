@@ -2,9 +2,10 @@ import {useState} from "react";
 
 type Props = {
     action: () => void
+    value?: string
   };
   
-  export default function ErrorModal( {  action}: Props) {
+  export default function ErrorModal( {  action, value }: Props) {
     const [showModal, setShowModal] = useState(true);
 
     const handleClose = () => {
@@ -23,7 +24,7 @@ type Props = {
               </svg>
               <div className="ml-6">
                   <div className="text-xl font-bold text-left text-black dark:text-gray-50 mt-5">Error</div>
-                  <div className="text-lg w-full text-gray-900 dark:text-gray-300 mt-1">¡Ups! Algo salió mal. Revise los datos ingresados e inténtelo nuevamente.</div>
+                  <div className="text-lg w-full text-gray-900 dark:text-gray-300 mt-1">¡Ups! Algo salió mal. {value ? value : " Revise los datos ingresados e inténtelo nuevamente."}</div>
               </div>
             </ div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
