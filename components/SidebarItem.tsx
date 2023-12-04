@@ -18,7 +18,7 @@ const SideBarItem = ({ href, title, children }: ISidebarItem) => {
           onClick={() => setOpen(!open)}
         >
           <span
-            className={`flex-1 ml-2 text-left whitespace-nowrap ${router.asPath === href && "text-red-50"}`}
+            className={`flex-1 ml-2 text-left whitespace-nowrap text-2xl ${router.asPath === href && "text-red-50"}`}
             sidebar-toggle-item="true"
           >
             {title}

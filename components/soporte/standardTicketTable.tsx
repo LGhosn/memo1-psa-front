@@ -129,7 +129,8 @@ export default function StandardTicketTable( { list }: Props) {
             <tr>
               <HeaderItem title="Id" />
               <HeaderItem title="Titulo" />
-              <HeaderItem title="Fecha Creación" />
+              <HeaderItem title="Fecha de Creación" />
+              <HeaderItem title="Fecha de Cierre" />
               <HeaderItem title="Severidad" />
               <HeaderItem title="Prioridad" />
               <HeaderItem title="Estado" />
@@ -145,7 +146,7 @@ export default function StandardTicketTable( { list }: Props) {
                 </tr>
               ) : (
                 filteredData.map((tarea) => (
-                  <TicketGridRow key={tarea.id} task={tarea} />
+                  <TicketGridRow key={tarea.id} ticket={tarea} />
                 ))
               )}
           </tbody>

@@ -26,7 +26,6 @@ export default function Cliente() {
 
   useEffect(() => {
     if (id) {
-      console.log(id)
       fetch(`https://psa-support-management.onrender.com/customers/${id}/tickets`)
       .then((res) => {
         return res.json()

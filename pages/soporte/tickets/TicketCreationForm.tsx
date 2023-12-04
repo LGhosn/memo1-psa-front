@@ -91,7 +91,6 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     }
 
     const data = {"ticket": ticket, "customer": cliente}
-    console.log(data)
     // @ts-ignore
     fetch(`https://psa-support-management.onrender.com/tickets/?idVersion=${version.value}&idProduct=${product.value}`, {
       method: 'POST',

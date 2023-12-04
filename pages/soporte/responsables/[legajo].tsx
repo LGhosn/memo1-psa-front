@@ -30,7 +30,6 @@ export default function Responsable() {
 
   useEffect(() => {
     if (legajo) {
-      console.log(legajo)
       fetch(`https://psa-support-management.onrender.com/employees/${legajo}/tickets`)
       .then((res) => {
         return res.json()

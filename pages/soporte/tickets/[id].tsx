@@ -93,7 +93,6 @@ export default function Ticket() {
 
   useEffect(() => {
     if (ticket && ticket.length > 0 ) {
-      console.log("setup")
       setupData()
     }
   }, [loading, ticket,customer, setupData])
@@ -159,7 +158,6 @@ export default function Ticket() {
         "lastName": apellido
       }
     }
-    console.log(responsable)
 
     fetch(`https://psa-support-management.onrender.com/tickets/${id}/assignResponsible`, {
       method: 'POST',

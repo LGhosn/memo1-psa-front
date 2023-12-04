@@ -35,7 +35,6 @@ export default function Producto() {
       .then((res) => {
         return res.json()
       }).then((res) => {
-        console.log(res)
         // formateo versiones
         const versiones = res.map((item: { id: any; name: any; }) => ({
           value: item.id,
@@ -51,7 +50,6 @@ export default function Producto() {
     setLoading(true)
     //@ts-ignore
     const idVersion = document.getElementById("versions").value
-    console.log(idVersion + " " +id)
     fetch(`https://psa-support-management.onrender.com/versions/${idVersion}/products/${id}/tickets`)
     .then((res) => {
       return res.json()
