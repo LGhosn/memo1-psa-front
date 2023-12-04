@@ -8,6 +8,7 @@ import ButtonForCreation from "../ButtonForCreation";
 
 export default function Productos() {
     const [products, setProducts] = useState([])
+    const [versions, setVersions] = useState({})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -16,9 +17,26 @@ export default function Productos() {
                 return res.json()
             }).then((res) => {
             setProducts(res)
-            setLoading(false)
         })
+        
     }, [])
+   
+    useEffect(() => {
+        if (products.length> 0) {
+            products.forEach((p) => {
+                //@ts-ignore
+                fetch(`https://psa-support-management.onrender.com/products/${p.id}/availableVersions`)
+                .then((res) => {
+                    return res.json()
+                }).then((res) => {
+                    //@ts-ignore
+                    versions[p.id] = res;
+                })
+            })
+            setLoading(false)
+        }
+    }, [products, versions])
+
 
     return (
         <div className="flex flex-row">
@@ -28,7 +46,7 @@ export default function Productos() {
                 loading ? <div className="flex flex-row justify-center"> <Loading /> </div> :
                 <>
                 <div className="mb-4">
-                    <h1 className="text-3xl font-bold text-black decoration-gray-400">Productos</h1>
+                    <h1 className="text-3xl font-bold text-black decoration-gray-400">Productos y Versiones</h1>
                 </div>
                 <div className="flex flex-col">
                     <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -36,14 +54,14 @@ export default function Productos() {
                             <table className="min-w-full">
                                 <thead>
                                 <tr>
+                                    <HeaderItem title="Id" />
                                     <HeaderItem title="Nombre" />
-                                    <HeaderItem title="Versión" />
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 {products.map((product) => (
-                                    <ProductGridRow key={product['id']} product={product} />
+                                    <ProductGridRow key={product['id']} product={product}/>
                                     ))}
                                 </tbody>
                             </table>

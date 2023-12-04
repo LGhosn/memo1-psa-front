@@ -10,7 +10,7 @@ export default function Responsables() {
   const [responsables, setResponsables] = useState([])
 
   useEffect(() => {
-      fetch(`https://psa-support-management.onrender.com/employees/externalApiEmployees`)
+      fetch(`https://psa-support-management.onrender.com/employees/`)
       .then((res) => {
         return res.json()
       }).then((res) => {

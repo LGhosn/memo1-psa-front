@@ -23,7 +23,7 @@ export const mainRoutes = [
     title: "Proyectos",
   },
   {
-    href: "/soporte",
+    href: "/soporte/productos",
     title: "Soporte",
   }
 ]

@@ -15,6 +15,7 @@ export default function Ticket() {
   const [loading, setLoading] = useState(true)
   const [ticket, setTicket] = useState([])
   const [empleados, setEmpleados] = useState([])
+  const [customer, setCustomer] = useState([])
   const [responsablesAsignados, setResponsablesAsignados] = useState([])
   const [responsables, setResponsables] = useState([])
   const [modalSuccessful, setModalSuccessful] = useState(false)
@@ -37,11 +38,13 @@ export default function Ticket() {
     // @ts-ignore
     setElementValue("typeOfProblem", translationTypeOfProblem[ticket.type]);
     // @ts-ignore
-    setElementValue("customerRS", ticket.customerRS);
+    setElementValue("customerRS", customer.rs);
     // @ts-ignore
-    setElementValue("customerCUIT", ticket.customerCUIT);
+    setElementValue("customerCUIT", customer.cuit);
     // @ts-ignore
     setElementValue("creationDate", setFormatDate(ticket.creationDate));
+    // @ts-ignore
+    setElementValue("closeDate", setFormatDate(ticket.closeDate));
   }
 
   function setupResponsables(){
@@ -59,25 +62,37 @@ export default function Ticket() {
       }
     }
   }
-
   useEffect(() => {
     if (id) {
-      fetch(`https://psa-support-management.onrender.com/tickets/${id}`)
-      .then((res) => {
-        return res.json()
-      }).then((res) => {
-        setTicket(res)
-        setLoading(false)
-      })
-
       fetch(`https://psa-support-management.onrender.com/tickets/${id}/responsible`)
       .then((res) => {
         return res.json()
       }).then((res) => {
         setResponsables(res)
       })
+
+      fetch(`https://psa-support-management.onrender.com/tickets/${id}/customer`)
+      .then((res) => {
+        return res.json()
+      }).then((res) => {
+        setCustomer(res)
+      })
+
+      fetch(`https://psa-support-management.onrender.com/tickets/${id}`)
+      .then((res) => {
+        return res.json()
+      }).then((res) => {
+        setTicket(res)
+      }).finally(() => setLoading(false))
     }
   }, [id])
+
+  useEffect(() => {
+    if (ticket && ticket.length > 0 ) {
+      console.log("setup")
+      setupData()
+    }
+  }, [loading, ticket,customer, setupData])
 
   useEffect(() => {
     if (!loading) {
@@ -199,6 +214,7 @@ export default function Ticket() {
                   <InputElement title="CUIT Cliente" id="customerCUIT" type="text" readonly />
                   <InputElement title="Razón Social Cliente" id="customerRS" type="text" readonly />
                   <InputElement title="Fecha de creación" id="creationDate" type="text" readonly />
+                  <InputElement title="Fecha de finalizacion" id="closeDate" type="text" readonly />
                   <InputElement title="Descripción" id="description" type="textarea" readonly />
                 </div>
               </div>

@@ -51,7 +51,7 @@ export default function Cliente() {
       <>
       <StandardTicketTable list={ticketsClientes} />
       <div className="p-2">
-        <StandardButton title="Volver" back/>
+        <StandardButton title="Volver" onClick={() => router.back()} back/>
       </div>
       </>
       }

@@ -18,6 +18,10 @@ export default function StandardTicketTable( { list }: Props) {
 
   // Función para aplicar filtros por columna
   const searchByTitulo = (columnIndex: string | number, filterValue: string) => {
+    if (filterValue == "") {
+      setFilteredData(list);
+      return;
+    }
     const filtered = filteredData.filter((item: { [x: string]: any; }) => {
       //@ts-ignore
       const cellValue = item[Object.keys(item)[columnIndex]];

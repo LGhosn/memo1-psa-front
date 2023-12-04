@@ -17,6 +17,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
   //let navigate = useNavigate();
   const [cliente , setClientes] = useState([])
   const [producto, setProductos] = useState([])
+  const [versiones, setVersiones] = useState([])
   const [alert, setAlert] = useState(false)
   const [modalSuccessful, setModalSuccessful] = useState(false)
   
@@ -36,9 +37,9 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     fetch("https://psa-support-management.onrender.com/products/")
     .then(response => response.json())
     .then(data => {
-      const productos = data.map((item: { id: any; name: any; version: any; }) => ({
+      const productos = data.map((item: { id: any; name: any; }) => ({
         value: item.id,
-        label: `${item.name} - ${item.version}`
+        label: item.name
       }));
       setProductos(productos)
     })
@@ -46,7 +47,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
 
   function closeForm() { 
     setOpenForm(false); 
-    // parent.window.location.reload();
+    parent.window.location.reload();
   }
 
   function createTicket() {
@@ -57,6 +58,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     let priority = document.getElementById("priority")
     let typeOfProblem = document.getElementById("typeOfProblem")
     let product = document.getElementById("producto")
+    let version = document.getElementById("version")
 
     // comprebo que los campos obligatorios esten completos
     // @ts-ignore
@@ -91,7 +93,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     const data = {"ticket": ticket, "customer": cliente}
     console.log(data)
     // @ts-ignore
-    fetch(`https://psa-support-management.onrender.com/tickets/?idProduct=${product.value}`, {
+    fetch(`https://psa-support-management.onrender.com/tickets/?idVersion=${version.value}&idProduct=${product.value}`, {
       method: 'POST',
       headers: {
         'Accept': '*/*',
@@ -106,6 +108,20 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
     setModalSuccessful(true)
   }
 
+  function actualizarVersiones() {
+    //@ts-ignore
+    const productId = document.getElementById("producto").value
+    fetch(`https://psa-support-management.onrender.com/products/${productId}/availableVersions`)
+    .then(response => response.json())
+    .then(data => {
+      const versiones = data.map((item: { id: any; name: any; }) => ({
+        value: item.id,
+        label: item.name
+      }));
+      setVersiones(versiones)
+    })
+  }
+
   return (
     <>
       <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -115,7 +131,7 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 
-            <div className=" rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-fit sm:max-w-lg">
+            <div className=" rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-80">
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -123,7 +139,8 @@ export default function TicketCreationForm({ title, openForm, setOpenForm }: Pro
                       <div className="mt-2">
                         <InputElement title="Título" id="title" type="text" readonly={false}/>
                         <SelectElement title="Clientes" id="customers" options={cliente} multiple={false}/>
-                        <SelectElement title="Producto" id="producto" options={producto} multiple={false}/>
+                        <SelectElement title="Producto" id="producto" options={producto} multiple={false} onChange={actualizarVersiones}/>
+                        <SelectElement title="Version Producto" id="version" options={versiones} multiple={false}/>
                         <SelectElement title="Prioridad" id="priority" options={priorityData} multiple={false}/>
                         <SelectElement title="Severidad" id="severity" options={severityData} multiple={false}/>
                         <SelectElement title="Tipo de Problema" id="typeOfProblem" options={typeOfProblemData} multiple={false}/>
