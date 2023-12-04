@@ -54,6 +54,7 @@ export default function TaskTable( { list, projectId }: Props) {
     setSelectedEstado('');
     // Actualizar la lista filtrada con la lista original
     setFilteredData(list);
+    setSelectedResponsable('')
   };
   function backPage(){
     router.push(`/proyectos/${projectId}`)
