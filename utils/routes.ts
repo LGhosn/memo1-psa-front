@@ -35,7 +35,7 @@ export const supportSideBarItems = [
   },
   {
     title: "Soporte",
-    href: "/soporte",
+    href: "/soporte/productos",
     children: [
       {
         title: "Productos",
@@ -68,7 +68,7 @@ export const projectSideBarItems = [
   },
   {
       title: "Soporte",
-      href: "/soporte",
+      href: "/soporte/productos",
   },
   {
       title: "Proyectos",
